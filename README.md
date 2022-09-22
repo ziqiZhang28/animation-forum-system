@@ -6,28 +6,22 @@
 #### 软件架构
 springboot+react前后端分离
 
+#### 目前的数据库设计
+暂时设计的几张表:
+![输入图片说明](imagesimage.png)
 
-#### 安装教程
+评论表-allcomment
+其中评论的数据库设计的 **root_comment_id** 和 **to_comment_id** 构造类似B站的评论区
+![输入图片说明](image2image.png)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+板块表-classify
+该表仅包括板块分类
+![输入图片说明](image3image.png)
 
-#### 使用说明
+帖子表-forum
+该表包括帖子id、标题、内容、板块分类编号、收藏数、点赞数
+![输入图片说明](image4image.png)
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 数据库设计
-表的结构设计
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+用户表-user
+ **该表暂未进行数据库加密，最后来做。** 
+![输入图片说明](image5image.png)
