@@ -2,7 +2,6 @@ package priv.togrther.back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import priv.togrther.back.entity.User;
 import priv.togrther.back.service.userService;
 
 @RestController
