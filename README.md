@@ -12,7 +12,7 @@ springboot+react前后端分离
 
 评论表-allcomment
 其中评论的数据库设计的 **root_comment_id** 和 **to_comment_id** 构造类似B站的评论区
-![输入图片说明](sql_design/allcomment.png)
+![输入图片说明](sql_design/comment.png)
 
 板块表-classify
 该表仅包括板块分类
