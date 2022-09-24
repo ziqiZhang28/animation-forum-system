@@ -14,4 +14,8 @@ public class forumService {
     public List<Forum> getTopForums(){
         return forumRepository.findTopForums();
     }
+
+    public void addNewForum(String title,String content,int classify_id){
+        forumRepository.newForum(title,content,classify_id);
+    }
 }
