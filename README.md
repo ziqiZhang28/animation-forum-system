@@ -42,4 +42,5 @@ springboot+react前后端分离
 用户表-user
 ![输入图片说明](sql-design/user.png)
 ![输入图片说明](sql-design/user2.png)
+
 **该表暂未进行数据库加密，最后来做。** 
