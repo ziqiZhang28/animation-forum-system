@@ -22,10 +22,14 @@ springboot+react前后端分离
 
 ![输入图片说明](sql-design/comment.png)
 
+![输入图片说明](sql-design/comment2.png)
+
 板块表-classify
 该表仅包括板块分类
 
 ![输入图片说明](sql-design/classify.png)
+
+![输入图片说明](sql-design/classify2.png)
 
 帖子表-forum
 
@@ -33,6 +37,9 @@ springboot+react前后端分离
 
 ![输入图片说明](sql-design/forum.png)
 
+![输入图片说明](sql-design/forum2.png)
+
 用户表-user
 ![输入图片说明](sql-design/user.png)
+![输入图片说明](sql-design/user2.png)
 **该表暂未进行数据库加密，最后来做。** 
