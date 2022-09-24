@@ -13,7 +13,7 @@ springboot+react前后端分离
 暂时设计的几张表:
 
 
-![输入图片说明](sql_design/1.png)
+![输入图片说明](sql-design/1.png)
 
 评论表-comment
 
