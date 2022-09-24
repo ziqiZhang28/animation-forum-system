@@ -1,11 +1,11 @@
-package priv.togrther.back.controller;
+package priv.together.back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import priv.togrther.back.entity.Forum;
-import priv.togrther.back.service.forumService;
+import priv.together.back.entity.Forum;
+import priv.together.back.service.forumService;
 
 
 import java.util.List;

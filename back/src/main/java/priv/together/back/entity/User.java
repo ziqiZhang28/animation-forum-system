@@ -1,4 +1,4 @@
-package priv.togrther.back.entity;
+package priv.together.back.entity;
 
 
 import javax.persistence.Column;

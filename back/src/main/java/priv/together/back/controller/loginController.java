@@ -1,8 +1,8 @@
-package priv.togrther.back.controller;
+package priv.together.back.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import priv.togrther.back.service.userService;
+import priv.together.back.service.userService;
 
 @RestController
 @RequestMapping("/api")

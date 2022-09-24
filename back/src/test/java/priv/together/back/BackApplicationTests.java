@@ -1,4 +1,4 @@
-package priv.togrther.back;
+package priv.together.back;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

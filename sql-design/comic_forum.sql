@@ -34,6 +34,9 @@ CREATE TABLE `classify` (
   PRIMARY KEY (`classify_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 INSERT INTO `classify` VALUES ('1','日漫');
+INSERT INTO `classify` VALUES ('2','国创');
+INSERT INTO `classify` VALUES ('3','3D');
+INSERT INTO `classify` VALUES ('4','美漫');
 
 DROP TABLE IF EXISTS `forum`;
 CREATE TABLE `forum` (
@@ -46,7 +49,8 @@ CREATE TABLE `forum` (
   PRIMARY KEY (`forum_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 INSERT INTO `forum` VALUES ('1','傻逼帖子题目1','傻逼帖子内容1','1','25','100');
-
+INSERT INTO `forum` VALUES ('2','傻逼帖子题目2','傻逼帖子内容3','4','325','100');
+INSERT INTO `forum` VALUES ('3','傻逼帖子题目3','傻逼帖子内容4','2','725','200');
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
@@ -58,3 +62,7 @@ CREATE TABLE `comment` (
   `to_comment_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+INSERT INTO `comment` VALUES ('1','傻逼根评论1','2','2',NULL,NULL);
+INSERT INTO `comment` VALUES ('2','傻逼评论','2','2','1',NULL);
+INSERT INTO `comment` VALUES ('3','傻逼评论','2','2','1','2');
