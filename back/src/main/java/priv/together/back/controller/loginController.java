@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/login")
 public class loginController {
     @Autowired
     userService user_service;
 
-    @PostMapping("/login")
+    @PostMapping("/loginIn")
     @Operation(summary = "需要设置拦截器，暂未完成该接口",
                parameters = {@Parameter(name = "username",in = ParameterIn.QUERY,example = "admin"),
                              @Parameter(name = "password",in = ParameterIn.QUERY,example = "123")})
