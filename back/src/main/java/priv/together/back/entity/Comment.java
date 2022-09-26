@@ -1,8 +1,6 @@
 package priv.together.back.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Comment {
@@ -23,6 +21,7 @@ public class Comment {
 
     @Column
     int to_comment_id;
+
 
     public Comment() {
     }
