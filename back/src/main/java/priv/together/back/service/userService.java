@@ -22,5 +22,19 @@ public class userService {
         return userRepository.findByUsernameAndPassword(username,password);
     }
 
+    public void addNewUser(String username,String password,String nickname,String email,String userface){
+        userRepository.addOneUser(username,password,nickname,email,userface);
+    }
 
+    public void deleteOneUser(Long user_id){
+        userRepository.deleteById(user_id);
+    }
+
+    public void updateOneUser(String nickname,String email,String userface,Long user_id){
+        userRepository.updateUser(nickname, email, userface, user_id);
+    }
+
+    public Iterable<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 }

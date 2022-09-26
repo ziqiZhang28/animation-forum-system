@@ -22,7 +22,10 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     @Query(value = "insert into Forum(title,content,classify_id) values(?1,?2,?3)",nativeQuery = true)
     void newForum(String title,String content,int classify_id);
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "update Forum set title=?1 where forum_id=?2",nativeQuery = true)
+    void updateForumTitle(String title,int forum_id);
 
 
 }

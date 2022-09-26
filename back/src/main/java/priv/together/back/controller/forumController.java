@@ -34,10 +34,20 @@ public class forumController {
         return forumService.getTopForums();
     }
 
-    @GetMapping("getOneForum")
+    @GetMapping("/getOneForum")
     @Operation(summary = "某一篇具体的帖子",parameters = {@Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")})
     Optional<Forum> getOneForum(@RequestParam("forum_id")int forum_id){
         return forumService.getOneForum(forum_id);
+    }
+
+    @PutMapping("/updateForumTitle/{forum_id}")
+    @Operation(summary = "修改帖子标题",parameters = {
+                @Parameter(name = "title",in = ParameterIn.QUERY,example = "题目哈哈哈"),
+                @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")
+    })
+    void modifyForumTitle(@Parameter(example = "1")@RequestParam("title") String title,
+                          @Parameter(hidden = true) @RequestParam("forum_id") int forum_id){
+        forumService.updateForum(title,forum_id);
     }
 
     @DeleteMapping("deleteOneForum")
