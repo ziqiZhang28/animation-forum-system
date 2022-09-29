@@ -11,8 +11,8 @@ const Settings: LayoutSettings & {
   "fixedHeader": true,
   "fixSiderbar": false,
   "pwa": false,
-  // "logo": "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
-  "logo":'/OIP-C (6).jpg',
+  "logo": "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
+  // "logo":'/OIP-C (6).jpg',
   "headerHeight": 48,
   "splitMenus": false
 };
