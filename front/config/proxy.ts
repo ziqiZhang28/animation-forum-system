@@ -1,11 +1,3 @@
-/*
- * @Descripttion: react_hospital
- * @version: 1.0
- * @Author: zlh
- * @Date: 2022-06-06 11:09:06
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-09-08 11:37:57
- */
 /**
  * 在生产环境 代理是无法生效的，所以这里没有生产环境的配置
  * -------------------------------
@@ -16,20 +8,18 @@
  */
 export default {
   dev: {
-    '/auth/': {
-      target: 'http://100erp.f3322.net:1010',
+    // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
+    '/api/': {
+      // 要代理的地址
+      target: 'https://preview.pro.ant.design',
+      // 配置了这个可以从 http 代理到 https
+      // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
-      pathRewrite: { '^': '' },
-    },
-    '/posts': {
-      target: 'http://jsonplaceholder.typicode.com',
-      changeOrigin: true,
-      pathRewrite: { '^': '' },
     },
   },
   test: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'https://proapi.azurewebsites.net',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
