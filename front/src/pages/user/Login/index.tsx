@@ -7,7 +7,7 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons';
 import { Alert, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ProFormCaptcha, ProFormCheckbox, ProFormText, LoginForm } from '@ant-design/pro-form';
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
@@ -290,7 +290,59 @@ import img1 from '../../../images/waoku.jpg';
 import img2 from '../../../images/wuwu.jpeg';
 import $ from "jquery";
 export default function Login() {
-  // 滑动的状态
+//   // 滑动的状态
+//   let flag=true
+//              const mySwitch=()=>{
+//                 if(flag){
+//                     // 获取到滑动盒子的dom元素并修改它移动的位置
+//                     $(".prebox").css("transform","translateX(100%)")
+//                     // 获取到滑动盒子的dom元素并修改它的背景颜色
+//                     $(".prebox").css("background-color","#c9e0ed")
+//                     //修改图片的路径
+//                     $("img").attr("src","../../../images/wuwu.jpeg")
+                    
+//                 }
+//                 else {
+//                     $(".prebox").css("transform","translateX(0%)")
+//                     $(".prebox").css("background-color","#edd4dc")
+//                     $("img").attr("src","../../../images/waoku.jpg")
+//                 }
+//                 flag=!flag
+//              }
+    const [isShow, setIsShow] = useState(false)  // 控制登陆、注册
+    const [showHide, SetShowHide] = useState(true)  // 控制登陆、注册显示隐藏
+    const search = useRef()
+    const contentStyleShow = {
+        transform: 'translateX(100%)',
+    }
+    const contentStyleHide = {
+        transform: 'translateX(0%)'
+    }
+    useEffect(() =>
+    {
+        document.title = '二次元动漫论坛登录'
+        document.addEventListener('keyup', function (e)
+        {
+            if (e.code === 'KeyS')
+            {
+                search?.current.focus();
+            }
+        })
+        return () =>
+        {
+
+        }
+    }, [])  // 检测数组内变量 如果为空 则监控全局
+    const registerClick = () =>
+    {
+        setIsShow(false)
+        SetShowHide(true)
+    }
+    const LoginClick = () =>
+    {
+        setIsShow(true)
+        SetShowHide(false)
+    }
   const bubleCreate=()=>{
     // 获取body元素
     const body = document.body
@@ -316,9 +368,9 @@ setInterval(() => {
 }, 200);
   return (
    
-      <div className={style.box}>
+      <div  className={style.box}>
         {/* <!-- 滑动盒子 --> */}
-        <div className={style.prebox}>
+        <div style={isShow ? contentStyleShow : contentStyleHide} className={isShow ? style.prebox:style.prebox } >
             <h1>WELCOME</h1>
             <p>JOIN US!</p>
             <div className={style.imgbox}>
@@ -326,7 +378,7 @@ setInterval(() => {
             </div>
         </div>
         {/* <!-- 注册盒子 --> */}
-        <div className={style.registerform}>
+        <div  className={style.registerform}>
             {/* <!-- 标题盒子 --> */}
             <div className={style.titlebox}>
                 <h1>注册</h1>
@@ -341,11 +393,11 @@ setInterval(() => {
             <div className={style.btnbox}>
                 <button>注册</button>
                 {/* <!-- 绑定点击事件 --> */}
-                {/* <button onClick={mySwitch}>已有账号?去登录</button> */}
+                <button onClick={registerClick}>去登录</button>
             </div>
         </div>
         {/* <!-- 登录盒子 --> */}
-        <div className={style.loginform}>
+        <div  className={style.loginform}>
             {/* <!-- 标题盒子 --> */}
             <div className={style.titlebox}>
                 <h1>登录</h1>
@@ -359,9 +411,11 @@ setInterval(() => {
             <div className={style.btnbox}>
                 <button>登录</button>
                 {/* <!-- 绑定点击事件 --> */}
-                {/* <button onClick={mySwitch}>没有账号?去注册</button> */}
+                <button onClick={LoginClick}>去注册</button>
             </div>
         </div>
+        
        </div>
   );
 }
+
