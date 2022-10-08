@@ -290,30 +290,11 @@ import img1 from '../../../images/waoku.jpg';
 import img2 from '../../../images/wuwu.jpeg';
 import $ from "jquery";
 export default function Login() {
-//   // 滑动的状态
-//   let flag=true
-//              const mySwitch=()=>{
-//                 if(flag){
-//                     // 获取到滑动盒子的dom元素并修改它移动的位置
-//                     $(".prebox").css("transform","translateX(100%)")
-//                     // 获取到滑动盒子的dom元素并修改它的背景颜色
-//                     $(".prebox").css("background-color","#c9e0ed")
-//                     //修改图片的路径
-//                     $("img").attr("src","../../../images/wuwu.jpeg")
-                    
-//                 }
-//                 else {
-//                     $(".prebox").css("transform","translateX(0%)")
-//                     $(".prebox").css("background-color","#edd4dc")
-//                     $("img").attr("src","../../../images/waoku.jpg")
-//                 }
-//                 flag=!flag
-//              }
     const [isShow, setIsShow] = useState(false)  // 控制登陆、注册
     const [showHide, SetShowHide] = useState(true)  // 控制登陆、注册显示隐藏
     const search = useRef()
     const contentStyleShow = {
-        transform: 'translateX(100%)',
+        transform: 'translateX(100%)' 
     }
     const contentStyleHide = {
         transform: 'translateX(0%)'
@@ -335,11 +316,13 @@ export default function Login() {
     }, [])  // 检测数组内变量 如果为空 则监控全局
     const registerClick = () =>
     {
+        // mySwitch()
         setIsShow(false)
         SetShowHide(true)
     }
     const LoginClick = () =>
     {
+        // mySwitch()
         setIsShow(true)
         SetShowHide(false)
     }
@@ -370,11 +353,11 @@ setInterval(() => {
    
       <div  className={style.box}>
         {/* <!-- 滑动盒子 --> */}
-        <div style={isShow ? contentStyleShow : contentStyleHide} className={isShow ? style.prebox:style.prebox } >
+        <div style={isShow ? contentStyleShow : contentStyleHide} className={isShow ? style.prebox1:style.prebox2 } >
             <h1>WELCOME</h1>
             <p>JOIN US!</p>
             <div className={style.imgbox}>
-                <img src={img1} alt="img1"/>
+                <img src={isShow?img2:img1} alt="img1"/>
             </div>
         </div>
         {/* <!-- 注册盒子 --> */}
@@ -414,7 +397,6 @@ setInterval(() => {
                 <button onClick={LoginClick}>去注册</button>
             </div>
         </div>
-        
        </div>
   );
 }
