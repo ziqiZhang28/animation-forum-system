@@ -28,6 +28,13 @@ public class forumController {
         forumService.addNewForum(title,content,classify_id);
     }
 
+    @DeleteMapping("/deleteOneForum")
+    @Operation(summary = "删除某一篇帖子",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "21")})
+    void deleteOneForum(@RequestParam("forum_id")int forum_id){
+        forumService.deleteOneForum(forum_id);
+    }
+
+
     @GetMapping("/getHomeForums")
     @Operation(summary = "返回所有收藏点赞数>=100的帖子列表")
     List<Forum> getHomeForums(){
@@ -40,7 +47,7 @@ public class forumController {
         return forumService.getOneForum(forum_id);
     }
 
-    @PutMapping("/updateForumTitle/{forum_id}")
+    @PutMapping("/updateForumTitle")
     @Operation(summary = "修改帖子标题",parameters = {
                 @Parameter(name = "title",in = ParameterIn.QUERY,example = "题目哈哈哈"),
                 @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")
@@ -50,9 +57,4 @@ public class forumController {
         forumService.updateForum(title,forum_id);
     }
 
-    @DeleteMapping("deleteOneForum")
-    @Operation(summary = "删除某一篇帖子",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "21")})
-    void deleteOneForum(@RequestParam("forum_id")int forum_id){
-        forumService.deleteOneForum(forum_id);
-    }
 }

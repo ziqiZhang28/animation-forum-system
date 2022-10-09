@@ -14,6 +14,12 @@ public class classifyController {
     @Autowired
     classifyService classifyService;
 
+    @GetMapping("/classify")
+    @Operation(summary = "所有板块分类")
+    public Iterable<Classify> getAllClassify(){
+        return classifyService.getClassify();
+    }
+
     @PostMapping("/addClassify")
     @Operation(summary = "新增板块分类",parameters = {
             @Parameter(name = "name",in = ParameterIn.QUERY,example = "超级英雄")
@@ -22,11 +28,6 @@ public class classifyController {
         classifyService.addClassify(name);
     }
 
-    @GetMapping("/classify")
-    @Operation(summary = "所有板块分类")
-    public Iterable<Classify> getAllClassify(){
-        return classifyService.getClassify();
-    }
 
     @PutMapping("/updateClassify")
     @Operation(summary = "修改板块名称",parameters = {

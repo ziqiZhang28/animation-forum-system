@@ -19,7 +19,7 @@ public class loginController {
     @Autowired
     userService user_service;
 
-    @PostMapping("/loginIn")
+    @PostMapping("/login")
     @Operation(summary = "需要设置拦截器，暂未完成该接口",
                parameters = {@Parameter(name = "username",in = ParameterIn.QUERY,example = "admin"),
                              @Parameter(name = "password",in = ParameterIn.QUERY,example = "123")})

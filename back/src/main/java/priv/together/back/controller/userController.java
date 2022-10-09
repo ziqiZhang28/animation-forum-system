@@ -14,6 +14,12 @@ public class userController {
     @Autowired
     userService userService;
 
+    @GetMapping("/user")
+    @Operation(summary = "所有用户列表")
+    Iterable<User> getAllUser(){
+        return userService.getAllUsers();
+    }
+
     @DeleteMapping("/deleteUser")
     @Operation(summary = "删除用户",parameters = {
             @Parameter(name = "user_id",in= ParameterIn.QUERY,example = "2"),
@@ -35,9 +41,5 @@ public class userController {
         userService.updateOneUser(nickname, email, userface, user_id);
     }
 
-    @GetMapping("/user")
-    @Operation(summary = "所有用户列表")
-    Iterable<User> getAllUser(){
-        return userService.getAllUsers();
-    }
+
 }
