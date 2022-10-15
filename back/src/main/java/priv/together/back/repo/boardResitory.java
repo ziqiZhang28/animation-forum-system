@@ -9,6 +9,6 @@ import priv.together.back.entity.Board;
 public interface boardResitory extends CrudRepository<Board,Integer> {
     @Transactional
     @Modifying
-    @Query(value = "insert into Board(name) values ( ?1 )",nativeQuery = true)
-    void addNewBoard(String name);
+    @Query(value = "insert into Board(content,board_time) values ( ?1 ,?2)",nativeQuery = true)
+    void addNewBoard(String content,String board_time);
 }

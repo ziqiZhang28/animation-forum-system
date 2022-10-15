@@ -30,7 +30,7 @@ public class commentController {
     }
 
     @GetMapping("/getForumComment")
-    @Operation(summary = "得到某篇帖子的所有评论，以根评论id为一组，为0即是根评论一组",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "2")})
+    @Operation(summary = "MAP类型(0即是根评论一组)得到某篇帖子的所有评论，以根评论id为一组",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "2")})
     public Map<Integer,List<Comment>> getForumComment(@RequestParam("forum_id")int forum_id){
         return commentService.getForumComment(forum_id);
     }
@@ -42,5 +42,13 @@ public class commentController {
     })
     public void addReplyToComment(@RequestBody Comment oldComment,@RequestParam("content") String content,@RequestParam("user_id") Long user_id){
         commentService.addReplyToComment(oldComment,content,user_id);
+    }
+
+    @DeleteMapping("/deleteComment")
+    @Operation(summary = "删除评论",parameters = {
+            @Parameter(name = "comment_id",in=ParameterIn.QUERY,example = "4")
+    })
+    public void deleteComment(@RequestParam("comment_id")int comment_id){
+        commentService.deleteCommentById(comment_id);
     }
 }

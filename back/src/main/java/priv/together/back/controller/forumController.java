@@ -36,7 +36,7 @@ public class forumController {
 
 
     @GetMapping("/getHomeForums")
-    @Operation(summary = "返回所有收藏点赞数>=100的帖子列表")
+    @Operation(summary = "返回所有收藏点赞数>=100的帖子列表，降序排列")
     List<Forum> getHomeForums(){
         return forumService.getTopForums();
     }
@@ -47,14 +47,13 @@ public class forumController {
         return forumService.getOneForum(forum_id);
     }
 
-    @PutMapping("/updateForumTitle")
-    @Operation(summary = "修改帖子标题",parameters = {
-                @Parameter(name = "title",in = ParameterIn.QUERY,example = "题目哈哈哈"),
+    @PutMapping("/updateForum")
+    @Operation(summary = "修改帖子的内容",parameters = {
                 @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")
     })
-    void modifyForumTitle(@Parameter(example = "1")@RequestParam("title") String title,
-                          @Parameter(hidden = true) @RequestParam("forum_id") int forum_id){
-        forumService.updateForum(title,forum_id);
+    void modifyForumTitle(@Parameter(hidden = true) @RequestParam("forum_id") int forum_id,
+                          @RequestBody Forum forum){
+        forumService.updateForum(forum.getTitle(),forum.getContent(),forum.getClassify_id(),forum_id);
     }
 
 

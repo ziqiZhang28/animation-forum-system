@@ -19,22 +19,13 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into Forum(title,content,classify_id) values(?1,?2,?3)",nativeQuery = true)
+    @Query(value = "insert into Forum(title,content,classify_id,collects,likes) values(?1,?2,?3,0,0)",nativeQuery = true)
     void newForum(String title,String content,int classify_id);
 
     @Transactional
     @Modifying
-    @Query(value = "update Forum set title=?1 where forum_id=?2",nativeQuery = true)
-    void updateForumTitle(String title,int forum_id);
+    @Query(value = "update Forum set title=?1 and content=?2 and classify_id=?3 where forum_id=?2",nativeQuery = true)
+    void updateForum(String title,String content,int classify_id,int forum_id);
 
-    @Transactional
-    @Modifying
-    @Query(value = "update Forum set content=?1 where forum_id=?2",nativeQuery = true)
-    void updateForumContent(String content,int forum_id);
-
-    @Transactional
-    @Modifying
-    @Query(value = "update Forum set classify_id=?1 where forum_id=?2",nativeQuery = true)
-    void updateForumClassifyId(int classify_id,int forum_id);
 
 }

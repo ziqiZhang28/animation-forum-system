@@ -9,12 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import priv.together.back.entity.User;
 @Repository
 public interface userRepository extends CrudRepository <User,Long> {
-    User findByUsernameAndPassword(String username,String password);
+
+    User findByUsername(String username);
 
     @Transactional
     @Modifying
     @Query(value = "insert into User(username,password,nickname,email,userface,enabled) values (?1,?2,?3,?4,?5,2)",nativeQuery = true)
     void addOneUser(String username,String password,String nickname,String email,String userface);
+
 
     @Transactional
     @Modifying

@@ -23,9 +23,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
-INSERT INTO `user` VALUES ('1', 'admin', 'admin_forum', '123', '1', 'sysnet@qq.com', ' ');
-INSERT INTO `user` VALUES ('2', 'regular', 'regular_forum', '123', '2', 'regular@qq.com', ' ');
-INSERT INTO `user` VALUES ('3', 'visitor', 'visitor_forum', '123', '3', 'regular@qq.com', ' ');
+INSERT INTO `user` VALUES ('1', 'admin', 'admin_forum', '$2a$10$EKC0rOYd7fFu3d.NVDG0huhNidfXYcWqmqGgsO40G08mmpDH6gFFy', '1', 'sysnet@qq.com', ' ');
+INSERT INTO `user` VALUES ('2', 'regular', 'regular_forum', '$2a$10$EKC0rOYd7fFu3d.NVDG0huhNidfXYcWqmqGgsO40G08mmpDH6gFFy', '2', 'regular@qq.com', ' ');
+INSERT INTO `user` VALUES ('3', 'visitor', 'visitor_forum', '$2a$10$EKC0rOYd7fFu3d.NVDG0huhNidfXYcWqmqGgsO40G08mmpDH6gFFy', '3', 'regular@qq.com', ' ');
 
 DROP TABLE IF EXISTS `classify`;
 CREATE TABLE `classify` (
@@ -63,6 +63,16 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
-INSERT INTO `comment` VALUES ('1','傻逼根评论1','2','2',NULL,NULL);
-INSERT INTO `comment` VALUES ('2','傻逼评论','2','2','1',NULL);
+INSERT INTO `comment` VALUES ('1','傻逼根评论1','2','2','0','0');
+INSERT INTO `comment` VALUES ('2','傻逼评论','2','2','1','0');
 INSERT INTO `comment` VALUES ('3','傻逼评论','2','2','1','2');
+
+DROP TABLE IF EXISTS `board`;
+CREATE TABLE `board` (
+  `board_id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) DEFAULT NULL,
+  `broad_time` varchar(255) NOT NULL,
+  PRIMARY KEY (`broad_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+INSERT INTO `broad` VALUES ("1","这是一条公告！","2022-09-20");

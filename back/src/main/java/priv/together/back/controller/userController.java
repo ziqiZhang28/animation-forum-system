@@ -28,17 +28,9 @@ public class userController {
         userService.deleteOneUser(user_id);
     }
     @PutMapping("/updateUser")
-    @Operation(summary = "更新用户资料",parameters = {
-            @Parameter(name = "nickname",in = ParameterIn.QUERY,example = "sysnet"),
-            @Parameter(name = "email",in=ParameterIn.QUERY,example = "1656565@sina.com"),
-            @Parameter(name = "userface",in=ParameterIn.QUERY,example = "base64解码"),
-            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "21")
-    })
-    void updateUser(@RequestParam("nickname")String nickname,
-                    @RequestParam("email")String email,
-                    @RequestParam("userface")String userface,
-                    @RequestParam("user_id")Long user_id){
-        userService.updateOneUser(nickname, email, userface, user_id);
+    @Operation(summary = "更新用户资料")
+    void updateUser(@RequestBody User user){
+        userService.updateOneUser(user.getNickname(),user.getEmail(),user.getUserface(),user.getUser_id());
     }
 
 

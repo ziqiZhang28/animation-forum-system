@@ -31,4 +31,6 @@ public interface commentResitory extends CrudRepository<Comment,Integer> {
     @Modifying
     @Query(value = "insert into Comment(content,user_id,forum_id,root_comment_id,to_comment_id) values ( ?1,?2,?3,?4,?5)",nativeQuery = true)
     void addReplyToComment(String content,Long user_id,int forum_id,int root_comment_id,int to_comment_id);
+
+
 }

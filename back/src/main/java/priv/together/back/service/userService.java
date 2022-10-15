@@ -1,6 +1,7 @@
 package priv.together.back.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import priv.together.back.entity.User;
 import priv.together.back.repo.userRepository;
@@ -10,16 +11,9 @@ public class userService {
     @Autowired
     userRepository userRepository;
 
-    public boolean ifUserExist(String username,String password){
-        if(userRepository.findByUsernameAndPassword(username, password)!=null){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
-    public User getUserByUsernameAndPassowrd(String username,String password){
-        return userRepository.findByUsernameAndPassword(username,password);
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 
     public void addNewUser(String username,String password,String nickname,String email,String userface){

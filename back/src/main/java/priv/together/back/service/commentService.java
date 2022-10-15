@@ -25,7 +25,7 @@ public class commentService {
         map.put(0,root_comment);
         for(Comment c:root_comment){
             int root_comment_id=c.getComment_id();
-            System.out.println(root_comment_id);
+            //System.out.println(root_comment_id);
             map.put(root_comment_id,commentResitory.getCommentByForum_idAndRoot_comment_id(forum_id,root_comment_id));
         }
 
@@ -39,5 +39,9 @@ public class commentService {
             commentResitory.addReplyToComment(content,user_id, oldComment.getForum_id(),oldComment.getRoot_comment_id(), oldComment.getComment_id());
         }
 
+    }
+
+    public void deleteCommentById(int comment_id){
+        commentResitory.deleteById(comment_id);
     }
 }

@@ -28,7 +28,7 @@ public class forumService {
         forumRepository.deleteById(forum_id);
     }
 
-    public void updateForum(String title,int forum_id){
-        forumRepository.updateForumTitle(title,forum_id);
+    public void updateForum(String title,String content,int classify_id,int forum_id){
+        forumRepository.updateForum(title,content,classify_id,forum_id);
     }
 }
