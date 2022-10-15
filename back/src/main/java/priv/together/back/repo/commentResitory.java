@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import priv.together.back.entity.Comment;
 
+import java.util.List;
+
 @Repository
 public interface commentResitory extends CrudRepository<Comment,Integer> {
     @Transactional
@@ -14,8 +16,11 @@ public interface commentResitory extends CrudRepository<Comment,Integer> {
     @Query(value = "insert into Comment(content,user_id,forum_id) values ( ?1,?2,?3 )",nativeQuery = true)
     void addNewCommentToForum(String content,Long user_id,int forum_id);
 
-    @Query(value = "select c from Comment c where c.forum_id=?1")
-    Iterable<Comment> getCommentByForum_id(int forum_id);
+    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=0")
+    List<Comment> getRootCommentByForum_id(int forum_id);
+
+    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=?2")
+    List<Comment> getCommentByForum_idAndRoot_comment_id(int forum_id,int root_comment_id);
 
     @Transactional
     @Modifying

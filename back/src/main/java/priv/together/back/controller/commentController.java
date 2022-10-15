@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Comment;
 import priv.together.back.service.commentService;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/comment")
 public class commentController {
@@ -27,8 +30,8 @@ public class commentController {
     }
 
     @GetMapping("/getForumComment")
-    @Operation(summary = "得到某篇帖子的所有评论",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "2")})
-    public Iterable<Comment> getForumComment(@RequestParam("forum_id")int forum_id){
+    @Operation(summary = "得到某篇帖子的所有评论，以根评论id为一组，为0即是根评论一组",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "2")})
+    public Map<Integer,List<Comment>> getForumComment(@RequestParam("forum_id")int forum_id){
         return commentService.getForumComment(forum_id);
     }
 

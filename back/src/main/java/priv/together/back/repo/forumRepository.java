@@ -13,7 +13,7 @@ import java.util.List;
 public interface forumRepository extends CrudRepository<Forum,Integer> {
 
 
-    @Query("select f from Forum f where f.likes+f.collects >=100")
+    @Query("select f from Forum f where f.likes+f.collects >=100 order by f.likes desc ")
     List<Forum> findTopForums();
 
 
@@ -27,5 +27,14 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     @Query(value = "update Forum set title=?1 where forum_id=?2",nativeQuery = true)
     void updateForumTitle(String title,int forum_id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Forum set content=?1 where forum_id=?2",nativeQuery = true)
+    void updateForumContent(String content,int forum_id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Forum set classify_id=?1 where forum_id=?2",nativeQuery = true)
+    void updateForumClassifyId(int classify_id,int forum_id);
 
 }
