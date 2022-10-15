@@ -25,4 +25,14 @@ public class collectsService {
         }
         return collects;
     }
+
+    public void collectOneForum(Long user_id,int forum_id){
+        forumRepository.collectForum(forum_id);
+        collectsRepository.collectOneForum(user_id,forum_id);
+    }
+
+    public void disCollectOneForum(Long user_id,int forum_id){
+        forumRepository.discollectForum(forum_id);
+        collectsRepository.disCollectOneForum(user_id,forum_id);
+    }
 }

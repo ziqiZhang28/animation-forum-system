@@ -23,4 +23,14 @@ public class likesService {
         }
         return likes;
     }
+
+    public void likeOneForum(Long user_id,int forum_id){
+        forumRepository.likeForum(forum_id);
+        likesRepository.likeOneForum(user_id,forum_id);
+    }
+
+    public void dislikeOneForum(Long user_id,int forum_id){
+        forumRepository.dislikeForum(forum_id);
+        likesRepository.dislikeOneForum(user_id,forum_id);
+    }
 }

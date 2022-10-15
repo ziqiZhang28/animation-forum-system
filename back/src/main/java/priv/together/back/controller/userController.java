@@ -58,4 +58,38 @@ public class userController {
         return collectsService.getAllCollects(user_id);
     }
 
+    @PutMapping("/like")
+    @Operation(summary = "点赞",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    void likeOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
+        likesService.likeOneForum(user_id,forum_id);
+    }
+    @PutMapping("/collect")
+    @Operation(summary = "收藏",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    void collectOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
+        collectsService.collectOneForum(user_id,forum_id);
+    }
+
+    @PutMapping("/dislike")
+    @Operation(summary = "取消点赞",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    void dislikeOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
+        likesService.dislikeOneForum(user_id, forum_id);
+    }
+
+    @PutMapping("/discollect")
+    @Operation(summary = "取消收藏",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    void disCollectOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
+        collectsService.disCollectOneForum(user_id, forum_id);
+    }
 }
