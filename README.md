@@ -31,6 +31,11 @@ springboot+react前后端分离
 
 ![输入图片说明](sql-design/classify2.png)
 
+
+公告表-broad
+该表仅包括公告
+![输入图片说明](sql-design/broad.png)
+
 帖子表-forum
 
 该表包括帖子id、标题、内容、板块分类编号、收藏数、点赞数
