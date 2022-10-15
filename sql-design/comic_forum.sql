@@ -72,7 +72,31 @@ CREATE TABLE `board` (
   `board_id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) DEFAULT NULL,
   `broad_time` varchar(255) NOT NULL,
-  PRIMARY KEY (`broad_id`)
+  PRIMARY KEY (`board_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
-INSERT INTO `broad` VALUES ("1","这是一条公告！","2022-09-20");
+INSERT INTO `board` VALUES ("1","这是一条公告！","2022-09-20");
+
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE `likes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `forum_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+INSERT INTO `likes` VALUES ("1","2","1");
+INSERT INTO `likes` VALUES ("2","2","2");
+INSERT INTO `likes` VALUES ("3","2","3");
+
+DROP TABLE IF EXISTS `collects`;
+CREATE TABLE `collects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `forum_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+INSERT INTO `collects` VALUES ("1","2","1");
+INSERT INTO `collects` VALUES ("2","2","2");
+INSERT INTO `collects` VALUES ("3","2","3");
