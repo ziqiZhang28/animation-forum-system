@@ -7,6 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import priv.together.back.entity.User;
+
+import java.util.List;
+
 @Repository
 public interface userRepository extends CrudRepository <User,Long> {
 
@@ -22,4 +25,6 @@ public interface userRepository extends CrudRepository <User,Long> {
     @Modifying
     @Query(value = "update User set nickname=?1,email=?2,userface=?3 where user_id=?4")
     void updateUser(String nickname,String email,String userface,Long user_id);
+
+
 }

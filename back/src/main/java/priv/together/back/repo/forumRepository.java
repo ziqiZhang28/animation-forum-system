@@ -28,4 +28,6 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     void updateForum(String title,String content,int classify_id,int forum_id);
 
 
+    @Query(value = "select f from Forum f where f.forum_id=?1")
+    Forum findByForum_id(int forum_id);
 }

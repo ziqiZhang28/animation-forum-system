@@ -56,6 +56,4 @@ public class forumController {
         forumService.updateForum(forum.getTitle(),forum.getContent(),forum.getClassify_id(),forum_id);
     }
 
-
-
 }
