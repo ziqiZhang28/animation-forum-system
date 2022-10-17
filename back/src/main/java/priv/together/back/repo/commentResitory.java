@@ -33,4 +33,6 @@ public interface commentResitory extends CrudRepository<Comment,Integer> {
     void addReplyToComment(String content,Long user_id,int forum_id,int root_comment_id,int to_comment_id);
 
 
+
+
 }

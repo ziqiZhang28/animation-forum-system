@@ -71,7 +71,7 @@ DROP TABLE IF EXISTS `board`;
 CREATE TABLE `board` (
   `board_id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) DEFAULT NULL,
-  `broad_time` varchar(255) NOT NULL,
+  `board_time` varchar(255) NOT NULL,
   PRIMARY KEY (`board_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
