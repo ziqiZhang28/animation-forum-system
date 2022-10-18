@@ -26,5 +26,9 @@ public interface userRepository extends CrudRepository <User,Long> {
     @Query(value = "update User set nickname=?1,email=?2,userface=?3 where user_id=?4")
     void updateUser(String nickname,String email,String userface,Long user_id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update User set password=?1 where user_id=?2")
+    void updatePassword(String password,Long user_id);
 
 }

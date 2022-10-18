@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import priv.together.back.entity.User;
 import priv.together.back.repo.userRepository;
 
+import java.util.Optional;
+
 @Service
 public class userService {
     @Autowired
     userRepository userRepository;
-
+    BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 
     public User findByUsername(String username){
         return userRepository.findByUsername(username);
@@ -30,5 +32,14 @@ public class userService {
 
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+    public void updateUserPassword(String password,Long user_id){
+        String encode_password=encoder.encode(password);
+        userRepository.updatePassword(encode_password,user_id);
+    }
+
+    public Optional<User> getOneUser(Long user_id){
+        return userRepository.findById(user_id);
     }
 }

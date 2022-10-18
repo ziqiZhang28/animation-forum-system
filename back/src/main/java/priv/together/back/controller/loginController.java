@@ -25,7 +25,7 @@ public class loginController {
     @Operation(summary = "登录设置Token,已完成",
                parameters = {@Parameter(name = "username",in = ParameterIn.QUERY,example = "admin"),
                              @Parameter(name = "password",in = ParameterIn.QUERY,example = "123")})
-    Map<String,Object> userExit(@RequestParam("username") String username, @RequestParam("password")String password){
+    Map<String,Object> userLogin(@RequestParam("username") String username, @RequestParam("password")String password){
         Map<String,Object> map=new HashMap<>();
         map.put("code",0);
         User user=user_service.findByUsername(username);

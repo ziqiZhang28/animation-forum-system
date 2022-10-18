@@ -45,10 +45,8 @@ public class commentController {
     }
 
     @DeleteMapping("/deleteComment")
-    @Operation(summary = "删除评论",parameters = {
-            @Parameter(name = "comment_id",in=ParameterIn.QUERY,example = "4")
-    })
-    public void deleteComment(@RequestParam("comment_id")int comment_id){
-        commentService.deleteCommentById(comment_id);
+    @Operation(summary = "删除评论")
+    public void deleteComment(@RequestBody Comment comment){
+        commentService.deleteCommentById(comment);
     }
 }

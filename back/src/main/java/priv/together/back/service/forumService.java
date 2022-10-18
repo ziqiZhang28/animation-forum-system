@@ -3,6 +3,7 @@ package priv.together.back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.together.back.entity.Forum;
+import priv.together.back.repo.CommentRepository;
 import priv.together.back.repo.forumRepository;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.Optional;
 public class forumService {
     @Autowired
     forumRepository forumRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     public List<Forum> getTopForums(){
         return forumRepository.findTopForums();
@@ -25,13 +28,12 @@ public class forumService {
         return forumRepository.findById(forum_id);
     }
 
-    public void deleteOneForum(int forum_id){
-        forumRepository.deleteById(forum_id);
-    }
-
     public void updateForum(String title,String content,int classify_id,int forum_id){
         forumRepository.updateForum(title,content,classify_id,forum_id);
     }
 
-
+    public void deleteForum(int forum_id){
+        commentRepository.deleteByForum_id(forum_id);
+        forumRepository.deleteByForum_id(forum_id);
+    }
 }

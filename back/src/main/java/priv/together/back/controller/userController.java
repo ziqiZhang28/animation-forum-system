@@ -12,6 +12,7 @@ import priv.together.back.service.likesService;
 import priv.together.back.service.userService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -91,5 +92,22 @@ public class userController {
     })
     void disCollectOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
         collectsService.disCollectOneForum(user_id, forum_id);
+    }
+
+    @GetMapping("/getOneUser")
+    @Operation(summary = "得到某个用户",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
+    })
+    Optional<User> getOneUser(@RequestParam("user_id")Long user_id){
+        return  userService.getOneUser(user_id);
+    }
+
+    @PutMapping("/updatePassword")
+    @Operation(summary = "重置密码",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "password",in=ParameterIn.QUERY,example = "456")
+    })
+    void updatePassword(@RequestParam("password")String password, @RequestParam("user_id")Long user_id){
+        userService.updateUserPassword(password, user_id);
     }
 }

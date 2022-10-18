@@ -3,7 +3,7 @@ package priv.together.back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.together.back.entity.Comment;
-import priv.together.back.repo.commentResitory;
+import priv.together.back.repo.CommentRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Objects;
 @Service
 public class commentService {
     @Autowired
-    commentResitory commentResitory;
+    CommentRepository commentResitory;
 
     public void addRootComment(String content,Long user_id,int forum_id){
         commentResitory.addNewCommentToForum(content, user_id, forum_id);
@@ -41,7 +41,12 @@ public class commentService {
 
     }
 
-    public void deleteCommentById(int comment_id){
-        commentResitory.deleteById(comment_id);
+    public void deleteCommentById(Comment comment){
+        if(Objects.equals(comment.getRoot_comment_id(),0)){
+            commentResitory.deleteByRoot_comment_id(comment.getComment_id());
+            commentResitory.deleteById(comment.getComment_id());
+        }else{
+            commentResitory.deleteById(comment.getComment_id());
+        }
     }
 }

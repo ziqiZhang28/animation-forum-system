@@ -3,12 +3,12 @@ package priv.together.back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.together.back.entity.Classify;
-import priv.together.back.repo.classifyResitory;
+import priv.together.back.repo.ClassifyRepository;
 
 @Service
 public class classifyService {
     @Autowired
-    classifyResitory classifyResitory;
+    ClassifyRepository classifyResitory;
 
     public void addClassify(String name){
         classifyResitory.addNewClassify(name);

@@ -31,7 +31,7 @@ public class forumController {
     @DeleteMapping("/deleteOneForum")
     @Operation(summary = "删除某一篇帖子",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "21")})
     void deleteOneForum(@RequestParam("forum_id")int forum_id){
-        forumService.deleteOneForum(forum_id);
+        forumService.deleteForum(forum_id);
     }
 
 

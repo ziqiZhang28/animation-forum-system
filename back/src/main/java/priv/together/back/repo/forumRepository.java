@@ -49,4 +49,9 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
 
     @Query(value = "select f from Forum f where f.forum_id=?1")
     Forum findByForum_id(int forum_id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Forum  where forum_id=?1",nativeQuery = true)
+    void deleteByForum_id(int forum_id);
 }
