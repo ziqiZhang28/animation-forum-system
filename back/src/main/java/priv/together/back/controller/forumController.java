@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Forum;
 import priv.together.back.service.forumService;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,4 +58,21 @@ public class forumController {
         forumService.updateForum(forum.getTitle(),forum.getContent(),forum.getClassify_id(),forum_id);
     }
 
+    @GetMapping("/getForumsByClassifyId")
+    @Operation(summary = "根据板块Id得到帖子列表",parameters = {
+            @Parameter(name = "classify_id",in=ParameterIn.QUERY,example = "2")
+    })
+    Iterable<Forum> getForumsByClassifyId(@RequestParam("classify_id")int classify_id){
+        return forumService.getForumsByClassifyId(classify_id);
+    }
+
+    @GetMapping("/getForumsByTime")
+    @Operation(summary = "根据最近时间得到帖子列表")
+    Iterable<Forum> getForumsByCurrentTime(){
+        Date cur_date=new Date();
+        Date per_date=new Date(cur_date.getTime() - 24*60*60*1000);//前一天
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String date_time=dateFormat.format(per_date);
+        return forumService.findForumsByDateDes(date_time);
+    }
 }

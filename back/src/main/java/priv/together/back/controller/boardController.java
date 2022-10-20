@@ -23,10 +23,8 @@ public class boardController {
     @PostMapping("/addNewBoard")
     @Operation(summary = "新增公告",parameters = {@Parameter(name = "content",in= ParameterIn.QUERY,example = "公告：新增辛普森一家！！速看！！！")})
     public void addNewBroad(@RequestParam("content")String content){
-        Date date=new Date();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String date_time=dateFormat.format(date);
-        boardService.addNewBoard(content,date_time);
+
+        boardService.addNewBoard(content);
     }
 
     @PostMapping("/getAllBoard")

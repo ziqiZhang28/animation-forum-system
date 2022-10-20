@@ -10,7 +10,9 @@ import priv.together.back.entity.User;
 import priv.together.back.service.collectsService;
 import priv.together.back.service.likesService;
 import priv.together.back.service.userService;
+import priv.together.back.util.TokenUtil;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,4 +112,14 @@ public class userController {
     void updatePassword(@RequestParam("password")String password, @RequestParam("user_id")Long user_id){
         userService.updateUserPassword(password, user_id);
     }
+
+    @GetMapping("/getUserByToken")
+    @Operation(summary = "通过Token得到用户",parameters = {
+            @Parameter(name = "Token",in=ParameterIn.QUERY)
+    })
+    User getUserByToken(String Token){
+        return TokenUtil.getUser(Token);
+    }
+
+
 }

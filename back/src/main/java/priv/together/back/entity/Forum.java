@@ -3,6 +3,7 @@ package priv.together.back.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Forum {
@@ -23,6 +24,33 @@ public class Forum {
 
     @Column
     int likes;
+
+    public int getCollects() {
+        return collects;
+    }
+
+    public void setCollects(int collects) {
+        this.collects = collects;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    @Column
+    Date create_time;
 
     public Forum() {
     }

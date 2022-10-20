@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import priv.together.back.entity.Forum;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -54,4 +55,12 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     @Modifying
     @Query(value = "delete from Forum  where forum_id=?1",nativeQuery = true)
     void deleteByForum_id(int forum_id);
+
+    @Query(value = "select f from Forum f where f.classify_id=?1")
+    Iterable<Forum> findByClassify_id(int classify_id);
+
+
+    @Query(value = "select * from Forum  where create_time >= unix_timestamp(?1) ",nativeQuery = true)
+    Iterable<Forum> findForumsByDateDes(String current_time);
 }
+

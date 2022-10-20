@@ -6,6 +6,7 @@ import priv.together.back.entity.Forum;
 import priv.together.back.repo.CommentRepository;
 import priv.together.back.repo.forumRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,13 @@ public class forumService {
     public void deleteForum(int forum_id){
         commentRepository.deleteByForum_id(forum_id);
         forumRepository.deleteByForum_id(forum_id);
+    }
+
+    public Iterable<Forum> getForumsByClassifyId(int classify_id){
+        return forumRepository.findByClassify_id(classify_id);
+    }
+
+    public Iterable<Forum> findForumsByDateDes(String current_time){
+        return forumRepository.findForumsByDateDes(current_time);
     }
 }

@@ -10,8 +10,8 @@ public class boardService {
     @Autowired
     boardRepository boardResitory;
 
-    public void addNewBoard(String content,String board_time){
-        boardResitory.addNewBoard(content,board_time);
+    public void addNewBoard(String content){
+        boardResitory.addNewBoard(content);
     }
 
     public Iterable<Board> getAllBoard(){
