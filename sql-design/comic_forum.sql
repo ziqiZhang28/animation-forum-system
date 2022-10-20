@@ -2,6 +2,7 @@
 Date: 2022-9-222 18:36:12
 */
 
+
 CREATE DATABASE `comic_forum` DEFAULT CHARACTER SET utf8;
 
 USE `comic_forum`;
@@ -46,11 +47,12 @@ CREATE TABLE `forum` (
 	`classify_id` int(11) NOT NULL,
 	`collects` int(11) DEFAULT NULL,
 	`likes` int(11) DEFAULT NULL,
+	`create_time` TIMESTAMP	NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY (`forum_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-INSERT INTO `forum` VALUES ('1','傻逼帖子题目1','傻逼帖子内容1','1','25','100');
-INSERT INTO `forum` VALUES ('2','傻逼帖子题目2','傻逼帖子内容3','4','325','100');
-INSERT INTO `forum` VALUES ('3','傻逼帖子题目3','傻逼帖子内容4','2','725','200');
+INSERT INTO `forum` (forum_id,title,content,classify_id,collects,likes)VALUES ('1','傻逼帖子题目1','傻逼帖子内容1','1','25','100');
+INSERT INTO `forum` (forum_id,title,content,classify_id,collects,likes)VALUES ('2','傻逼帖子题目2','傻逼帖子内容3','4','325','100');
+INSERT INTO `forum` (forum_id,title,content,classify_id,collects,likes)VALUES ('3','傻逼帖子题目3','傻逼帖子内容4','2','725','200');
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
@@ -71,11 +73,11 @@ DROP TABLE IF EXISTS `board`;
 CREATE TABLE `board` (
   `board_id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(255) DEFAULT NULL,
-  `board_time` varchar(255) NOT NULL,
+  `board_time` TIMESTAMP	NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY (`board_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
-INSERT INTO `board` VALUES ("1","这是一条公告！","2022-09-20");
+INSERT INTO `board` (board_id,content)VALUES ("1","这是一条公告！");
 
 DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes` (
