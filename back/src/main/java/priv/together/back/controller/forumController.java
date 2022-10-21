@@ -75,4 +75,12 @@ public class forumController {
         String date_time=dateFormat.format(per_date);
         return forumService.findForumsByDateDes(date_time);
     }
+
+    @GetMapping("/getForumsByKey")
+    @Operation(summary = "根据关键词得到帖子列表，目前只考虑了一个关键词",parameters = {
+            @Parameter(name = "key_word",in=ParameterIn.QUERY,example = "傻逼")
+    })
+    Iterable<Forum> getForumsByKey(@RequestParam("key_word")String key_words){
+        return forumService.findFormsByKey(key_words);
+    }
 }

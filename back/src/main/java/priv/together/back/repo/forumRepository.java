@@ -62,5 +62,8 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
 
     @Query(value = "select * from Forum  where create_time >= unix_timestamp(?1) ",nativeQuery = true)
     Iterable<Forum> findForumsByDateDes(String current_time);
+    
+    @Query(value = "select * from Forum  where INSTR(content,?1)",nativeQuery = true)
+    Iterable<Forum> findForumsByUniqWord(String key);
 }
 

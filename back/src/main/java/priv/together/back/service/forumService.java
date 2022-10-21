@@ -45,4 +45,8 @@ public class forumService {
     public Iterable<Forum> findForumsByDateDes(String current_time){
         return forumRepository.findForumsByDateDes(current_time);
     }
+
+    public Iterable<Forum> findFormsByKey(String key){
+        return forumRepository.findForumsByUniqWord(key);
+    }
 }
