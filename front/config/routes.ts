@@ -7,6 +7,7 @@
         name: 'login',
         path: '/user/login',
         component: './user/Login',
+        hideInBreadcrumb: true,
       },
       {
         component: './404',
@@ -18,6 +19,7 @@
     name: 'welcome',
     icon: 'smile',
     component: './Welcome',
+    hideInBreadcrumb: true,
   },
   {
     path: '/admin',

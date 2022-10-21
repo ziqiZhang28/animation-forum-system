@@ -9,7 +9,7 @@ import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import defaultSettings from '../config/defaultSettings';
 import NoFoundPage from './pages/404';
-import TagView from './components/TagView';
+// import TagView from './components/TagView';
 
 // const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -73,17 +73,17 @@ export async function getInitialState(): Promise<{
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
     rightContentRender: () => <RightContent />,
-    childrenRender: (children) => {
-      return (
-        <>
-          {initialState?.currentUser && location.pathname !== loginPath ? (
-            <TagView children={children} home="/workplace" />
-          ) : (
-            children
-          )}
-        </>
-      );
-    },
+    // childrenRender: (children) => {
+    //   return (
+    //     <>
+    //       {initialState?.currentUser && location.pathname !== loginPath ? (
+    //         <TagView children={children} home="/workplace" />
+    //       ) : (
+    //         children
+    //       )}
+    //     </>
+    //   );
+    // },
     disableContentMargin: false,
     contentStyle: {
       margin: 12,
