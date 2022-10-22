@@ -13,7 +13,7 @@ springboot+react前后端分离
 暂时设计的几张表:
 
 
-![输入图片说明](sql-design/1.png)
+
 
 评论表-comment
 
@@ -48,4 +48,4 @@ springboot+react前后端分离
 ![输入图片说明](sql-design/user.png)
 ![输入图片说明](sql-design/user2.png)
 
-**该表暂未进行数据库加密，最后来做。** 
+密码加密使用spring security提供的  生成的密文
