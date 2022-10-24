@@ -18,4 +18,6 @@ public interface ClassifyRepository extends CrudRepository<Classify,Integer> {
     @Modifying
     @Query(value = "update Classify set title=?1 where classify_id=?2")
     void modifyClassifyName(String title,int classify_id);
+
+
 }

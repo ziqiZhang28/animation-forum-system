@@ -43,6 +43,16 @@ public class classifyController {
     public void updateClassify(@RequestParam("name")String name,@RequestParam("classify_id") int classify_id){
         classifyService.modifyClassify(name,classify_id);
     }
+    @GetMapping("/getClassifyById")
+    @Operation(summary = "通过板块Id查找",parameters = {
+            @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "2")
+    })
+    public Map<String,Object> getClassifyById(@RequestParam("classify_id")int classify_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",classifyService.getClassifyById(classify_id));
+        return map;
+    }
 
 /*    @DeleteMapping("/deleteClassify")
     @Operation(summary = "删除板块",parameters = {@Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1")})

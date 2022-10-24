@@ -49,4 +49,8 @@ public class forumService {
     public Iterable<Forum> findFormsByKey(String key){
         return forumRepository.findForumsByUniqWord(key);
     }
+
+    public Iterable<Forum> getAllForums(){
+        return forumRepository.findAll();
+    }
 }
