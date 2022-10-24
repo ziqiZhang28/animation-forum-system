@@ -11,11 +11,11 @@ import priv.together.back.entity.Classify;
 public interface ClassifyRepository extends CrudRepository<Classify,Integer> {
     @Transactional
     @Modifying
-    @Query(value = "insert into Classify(name) values (?1)",nativeQuery = true)
-    void addNewClassify(String name);
+    @Query(value = "insert into Classify(title,description) values (?1,?2)",nativeQuery = true)
+    void addNewClassify(String title,String description);
 
     @Transactional
     @Modifying
-    @Query(value = "update Classify set name=?1 where classify_id=?2")
-    void modifyClassifyName(String name,int classify_id);
+    @Query(value = "update Classify set title=?1 where classify_id=?2")
+    void modifyClassifyName(String title,int classify_id);
 }

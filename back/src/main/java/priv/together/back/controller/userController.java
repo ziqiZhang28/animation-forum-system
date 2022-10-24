@@ -12,9 +12,7 @@ import priv.together.back.service.likesService;
 import priv.together.back.service.userService;
 import priv.together.back.util.TokenUtil;
 
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -28,8 +26,11 @@ public class userController {
 
     @GetMapping("/user")
     @Operation(summary = "所有用户列表")
-    Iterable<User> getAllUser(){
-        return userService.getAllUsers();
+    Map<String,Object> getAllUser(){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",userService.getAllUsers());
+        return map;
     }
 
     @DeleteMapping("/deleteUser")
@@ -49,16 +50,22 @@ public class userController {
     @Operation(summary = "用户的喜欢列表",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
     })
-    List<Forum> getLikesOfUser(@RequestParam("user_id") Long user_id){
-        return likesService.getAllLikes(user_id);
+    Map<String,Object> getLikesOfUser(@RequestParam("user_id") Long user_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",likesService.getAllLikes(user_id));
+        return map;
     }
 
     @GetMapping("/getUserCollects")
     @Operation(summary = "用户的收藏列表",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
     })
-    List<Forum> getCollectsOfUser(@RequestParam("user_id") Long user_id){
-        return collectsService.getAllCollects(user_id);
+    Map<String,Object> getCollectsOfUser(@RequestParam("user_id") Long user_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",collectsService.getAllCollects(user_id));
+        return map;
     }
 
     @PutMapping("/like")
@@ -100,8 +107,11 @@ public class userController {
     @Operation(summary = "得到某个用户",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
     })
-    Optional<User> getOneUser(@RequestParam("user_id")Long user_id){
-        return  userService.getOneUser(user_id);
+    Map<String,Object> getOneUser(@RequestParam("user_id")Long user_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",userService.getOneUser(user_id));
+        return  map;
     }
 
     @PutMapping("/updatePassword")
@@ -117,8 +127,11 @@ public class userController {
     @Operation(summary = "通过Token得到用户",parameters = {
             @Parameter(name = "Token",in=ParameterIn.QUERY)
     })
-    User getUserByToken(String Token){
-        return TokenUtil.getUser(Token);
+    Map<String,Object> getUserByToken(String Token){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",TokenUtil.getUser(Token));
+        return  map;
     }
 
 

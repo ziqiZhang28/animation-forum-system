@@ -9,9 +9,7 @@ import priv.together.back.entity.Forum;
 import priv.together.back.service.forumService;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/forum")
@@ -39,14 +37,20 @@ public class forumController {
 
     @GetMapping("/getHomeForums")
     @Operation(summary = "返回所有收藏点赞数>=100的帖子列表，降序排列")
-    List<Forum> getHomeForums(){
-        return forumService.getTopForums();
+    Map<String,Object> getHomeForums(){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.getTopForums());
+        return map;
     }
 
     @GetMapping("/getOneForum")
     @Operation(summary = "某一篇具体的帖子",parameters = {@Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")})
-    Optional<Forum> getOneForum(@RequestParam("forum_id")int forum_id){
-        return forumService.getOneForum(forum_id);
+    Map<String,Object> getOneForum(@RequestParam("forum_id")int forum_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.getOneForum(forum_id));
+        return map;
     }
 
     @PutMapping("/updateForum")
@@ -62,25 +66,35 @@ public class forumController {
     @Operation(summary = "根据板块Id得到帖子列表",parameters = {
             @Parameter(name = "classify_id",in=ParameterIn.QUERY,example = "2")
     })
-    Iterable<Forum> getForumsByClassifyId(@RequestParam("classify_id")int classify_id){
-        return forumService.getForumsByClassifyId(classify_id);
+    Map<String,Object> getForumsByClassifyId(@RequestParam("classify_id")int classify_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.getForumsByClassifyId(classify_id));
+        return map;
     }
 
     @GetMapping("/getForumsByTime")
     @Operation(summary = "根据最近时间得到帖子列表")
-    Iterable<Forum> getForumsByCurrentTime(){
+    Map<String,Object> getForumsByCurrentTime(){
         Date cur_date=new Date();
         Date per_date=new Date(cur_date.getTime() - 24*60*60*1000);//前一天
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String date_time=dateFormat.format(per_date);
-        return forumService.findForumsByDateDes(date_time);
+
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.findForumsByDateDes(date_time));
+        return map;
     }
 
     @GetMapping("/getForumsByKey")
     @Operation(summary = "根据关键词得到帖子列表，目前只考虑了一个关键词",parameters = {
             @Parameter(name = "key_word",in=ParameterIn.QUERY,example = "傻逼")
     })
-    Iterable<Forum> getForumsByKey(@RequestParam("key_word")String key_words){
-        return forumService.findFormsByKey(key_words);
+    Map<String,Object> getForumsByKey(@RequestParam("key_word")String key_words){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.findFormsByKey(key_words));
+        return map;
     }
 }

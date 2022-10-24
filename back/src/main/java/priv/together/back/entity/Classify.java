@@ -10,14 +10,26 @@ public class Classify {
     int classify_id;
 
     @Column
-    String name;
+    String title;
+
+    @Column
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Classify() {
     }
 
-    public Classify(int classify_id, String name) {
+    public Classify(int classify_id, String title,String description) {
         this.classify_id = classify_id;
-        this.name = name;
+        this.title = title;
+        this.description=description;
     }
 
     public int getClassify_id() {
@@ -28,11 +40,11 @@ public class Classify {
         this.classify_id = classify_id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String name) {
+        this.title = name;
     }
 }

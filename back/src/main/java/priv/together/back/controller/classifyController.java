@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Classify;
 import priv.together.back.service.classifyService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/classify")
 public class classifyController {
@@ -16,16 +19,20 @@ public class classifyController {
 
     @GetMapping("/classify")
     @Operation(summary = "所有板块分类")
-    public Iterable<Classify> getAllClassify(){
-        return classifyService.getClassify();
+    public Map<String,Object> getAllClassify(){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",classifyService.getClassify());
+        return map;
     }
 
     @PostMapping("/addClassify")
     @Operation(summary = "新增板块分类",parameters = {
-            @Parameter(name = "name",in = ParameterIn.QUERY,example = "超级英雄")
+            @Parameter(name = "title",in = ParameterIn.QUERY,example = "超级英雄"),
+            @Parameter(name = "description",in = ParameterIn.QUERY,example = "This is superman!")
     })
-    void addNewClassify(@RequestParam("name")String name){
-        classifyService.addClassify(name);
+    void addNewClassify(@RequestParam("title")String title,@RequestParam("description")String description){
+        classifyService.addClassify(title,description);
     }
 
 

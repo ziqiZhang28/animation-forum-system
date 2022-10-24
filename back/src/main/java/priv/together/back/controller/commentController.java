@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Comment;
 import priv.together.back.service.commentService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,11 @@ public class commentController {
 
     @GetMapping("/getForumComment")
     @Operation(summary = "MAP类型(0即是根评论一组)得到某篇帖子的所有评论，以根评论id为一组",parameters = {@Parameter(name = "forum_id",in = ParameterIn.QUERY,example = "2")})
-    public Map<Integer,List<Comment>> getForumComment(@RequestParam("forum_id")int forum_id){
-        return commentService.getForumComment(forum_id);
+    public Map<String,Object> getForumComment(@RequestParam("forum_id")int forum_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",commentService.getForumComment(forum_id));
+        return map;
     }
 
     @PostMapping("/addReplyToComment")

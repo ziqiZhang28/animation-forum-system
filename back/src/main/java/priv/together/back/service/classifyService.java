@@ -10,8 +10,8 @@ public class classifyService {
     @Autowired
     ClassifyRepository classifyResitory;
 
-    public void addClassify(String name){
-        classifyResitory.addNewClassify(name);
+    public void addClassify(String title,String description){
+        classifyResitory.addNewClassify(title,description);
     }
 
     public Iterable<Classify> getClassify(){
