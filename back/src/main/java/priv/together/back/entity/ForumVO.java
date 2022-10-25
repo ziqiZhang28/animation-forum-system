@@ -18,6 +18,20 @@ public class ForumVO {
 
     String create_time;
 
+    public ForumVO(int forum_id, String title, String content, int classify_id, int collects, int likes, String nickname, String create_time) {
+        this.forum_id = forum_id;
+        this.title = title;
+        this.content = content;
+        this.classify_id = classify_id;
+        this.collects = collects;
+        this.likes = likes;
+        this.nickname = nickname;
+        this.create_time = create_time;
+    }
+
+    public ForumVO() {
+    }
+
     public String getCreate_time() {
         return create_time;
     }

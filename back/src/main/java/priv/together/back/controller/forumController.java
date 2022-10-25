@@ -22,10 +22,11 @@ public class forumController {
               parameters = {
                 @Parameter(name = "title",in = ParameterIn.QUERY,example = "傻逼帖子的题目"),
                 @Parameter(name = "content",in=ParameterIn.QUERY,example = "傻逼帖子的内容"),
-                @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1")
+                @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1"),
+                @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
               })
-    public void addForum(@RequestParam("title")String title,@RequestParam("content")String content,@RequestParam("classify_id")int classify_id){
-        forumService.addNewForum(title,content,classify_id);
+    public void addForum(@RequestParam("title")String title,@RequestParam("content")String content,@RequestParam("classify_id")int classify_id,@RequestParam("user_id")Long user_id){
+        forumService.addNewForum(title,content,classify_id,user_id);
     }
     @GetMapping("/getAllForums")
     @Operation(summary = "所有帖子列表(全部)")
@@ -43,15 +44,24 @@ public class forumController {
     }
 
 
+    @GetMapping("/getHotForums")
+    @Operation(summary = "(最热)",parameters = {
+            @Parameter(name = "classify_id",in=ParameterIn.QUERY,example = "2")
+    })
+    Map<String,Object> getHotForums(@RequestParam("classify_id") int classify_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.getTopForums(classify_id));
+        return map;
+    }
     @GetMapping("/getHomeForums")
-    @Operation(summary = "返回所有收藏点赞数>=100的帖子列表，降序排列(最热)")
+    @Operation(summary = "返回所有收藏点赞数>=100的帖子列表，降序排列(首页)")
     Map<String,Object> getHomeForums(){
         Map<String,Object> map=new HashMap<>();
         map.put("code",1);
-        map.put("data",forumService.getTopForums());
+        map.put("data",forumService.getHomeTopForums());
         return map;
     }
-
     @GetMapping("/getOneForum")
     @Operation(summary = "某一篇具体的帖子",parameters = {@Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")})
     Map<String,Object> getOneForum(@RequestParam("forum_id")int forum_id){
@@ -82,8 +92,10 @@ public class forumController {
     }
 
     @GetMapping("/getForumsByTime")
-    @Operation(summary = "根据最近时间得到帖子列表(最新)")
-    Map<String,Object> getForumsByCurrentTime(){
+    @Operation(summary = "(最新)",parameters = {
+            @Parameter(name = "classify_id",in=ParameterIn.QUERY,example = "2")
+    })
+    Map<String,Object> getForumsByCurrentTime(@RequestParam("classify_id")int classify_id){
         Date cur_date=new Date();
         Date per_date=new Date(cur_date.getTime() - 24*60*60*1000);//前一天
         SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -91,7 +103,7 @@ public class forumController {
 
         Map<String,Object> map=new HashMap<>();
         map.put("code",1);
-        map.put("data",forumService.findForumsByDateDes(date_time));
+        map.put("data",forumService.findForumsByDateDes(date_time,classify_id));
         return map;
     }
 

@@ -18,9 +18,19 @@ public class ForumSimplify {
 
     Long user_id;
 
+    String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     String create_time;
 
-    public ForumSimplify(int forum_id, String title, String content, int classify_id, int collects, int likes, Long user_id, String create_time) {
+    public ForumSimplify(int forum_id, String title, String content, int classify_id, int collects, int likes, Long user_id,String nickname, String create_time) {
         this.forum_id = forum_id;
         this.title = title;
         this.content = content;
@@ -28,6 +38,7 @@ public class ForumSimplify {
         this.collects = collects;
         this.likes = likes;
         this.user_id = user_id;
+        this.nickname=nickname;
         this.create_time = create_time;
     }
 

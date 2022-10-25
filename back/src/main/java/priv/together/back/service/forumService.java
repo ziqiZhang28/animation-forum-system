@@ -22,29 +22,45 @@ public class forumService {
     userRepository userRepository;
 
     SimpleDateFormat sdf=new SimpleDateFormat();
-
-    public  List<ForumVO> getTopForums(){
-        List<Forum> list=forumRepository.findTopForums();
+    public  List<ForumVO> getHomeTopForums(){
+        List<Forum> list=forumRepository.findHomeTopForums();
         List<ForumVO> topForum=new ArrayList<>();
-        ForumVO forumVO=new ForumVO();
 
         for(Forum f: list){
-            forumVO.setForum_id(f.getForum_id());
-            forumVO.setClassify_id(f.getClassify_id());
-            forumVO.setContent(f.getContent());
-            forumVO.setTitle(f.getTitle());
-            forumVO.setCollects(f.getCollects());
-            forumVO.setLikes(f.getLikes());
-            forumVO.setCreate_time(sdf.format(f.getCreate_time()));
-            forumVO.setNickname(userRepository.getNicknameByUser_id(f.getUser_id()));
-            topForum.add(forumVO);
+            topForum.add(new ForumVO(f.getForum_id(),
+                    f.getTitle(),
+                    f.getContent(),
+                    f.getClassify_id(),
+                    f.getCollects(),
+                    f.getLikes(),
+                    userRepository.getNicknameByUser_id(f.getUser_id()),
+                    sdf.format(f.getCreate_time()))
+            );
+        }
+
+        return topForum;
+    }
+    public  List<ForumVO> getTopForums(int classify_id){
+        List<Forum> list=forumRepository.findTopForums(classify_id);
+        List<ForumVO> topForum=new ArrayList<>();
+
+        for(Forum f: list){
+            topForum.add(new ForumVO(f.getForum_id(),
+                                    f.getTitle(),
+                                    f.getContent(),
+                                    f.getClassify_id(),
+                                    f.getCollects(),
+                                    f.getLikes(),
+                                    userRepository.getNicknameByUser_id(f.getUser_id()),
+                                    sdf.format(f.getCreate_time()))
+            );
         }
 
         return topForum;
     }
 
-    public void addNewForum(String title,String content,int classify_id){
-        forumRepository.newForum(title,content,classify_id);
+    public void addNewForum(String title,String content,int classify_id,Long user_id){
+        forumRepository.newForum(title,content,classify_id,user_id);
     }
 
     public ForumSimplify getOneForum(int forum_id){
@@ -56,6 +72,7 @@ public class forumService {
                                                         forum.getCollects(),
                                                         forum.getLikes(),
                                                         forum.getUser_id(),
+                                                        userRepository.getNicknameByUser_id(forum.getUser_id()),
                                                         sdf.format(forum.getCreate_time()));
         return forumSimplify;
     }
@@ -80,14 +97,15 @@ public class forumService {
                     forum.getCollects(),
                     forum.getLikes(),
                     forum.getUser_id(),
+                    userRepository.getNicknameByUser_id(forum.getUser_id()),
                     sdf.format(forum.getCreate_time()))
             );
         }
         return list;
     }
 
-    public List<ForumSimplify> findForumsByDateDes(String current_time){
-        List<Forum> forums= forumRepository.findForumsByDateDes(current_time);
+    public List<ForumSimplify> findForumsByDateDes(String current_time,int classify_id){
+        List<Forum> forums= forumRepository.findForumsByDateDes(current_time,classify_id);
         List<ForumSimplify> list=new ArrayList<>();
         for(Forum forum: forums){
             list.add(new ForumSimplify(forum.getForum_id(),
@@ -97,6 +115,7 @@ public class forumService {
                     forum.getCollects(),
                     forum.getLikes(),
                     forum.getUser_id(),
+                    userRepository.getNicknameByUser_id(forum.getUser_id()),
                     sdf.format(forum.getCreate_time()))
             );
         }
@@ -114,6 +133,7 @@ public class forumService {
                     forum.getCollects(),
                     forum.getLikes(),
                     forum.getUser_id(),
+                    userRepository.getNicknameByUser_id(forum.getUser_id()),
                     sdf.format(forum.getCreate_time()))
             );
         }
@@ -131,6 +151,7 @@ public class forumService {
                     forum.getCollects(),
                     forum.getLikes(),
                     forum.getUser_id(),
+                    userRepository.getNicknameByUser_id(forum.getUser_id()),
                     sdf.format(forum.getCreate_time()))
             );
         }

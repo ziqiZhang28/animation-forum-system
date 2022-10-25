@@ -14,15 +14,18 @@ import java.util.List;
 public interface forumRepository extends CrudRepository<Forum,Integer> {
 
 
+    @Query(value = "select * from Forum  where likes+collects >=100 and classify_id=?1 order by likes+collects desc ",nativeQuery = true)
+    List<Forum> findTopForums(int classify_id);
+
     @Query("select f from Forum f where f.likes+f.collects >=100 order by f.likes desc ")
-    List<Forum> findTopForums();
+    List<Forum> findHomeTopForums();
 
     List<Forum> findAll();
 
     @Transactional
     @Modifying
-    @Query(value = "insert into Forum(title,content,classify_id,collects,likes) values(?1,?2,?3,0,0)",nativeQuery = true)
-    void newForum(String title,String content,int classify_id);
+    @Query(value = "insert into Forum(title,content,classify_id,user_id,collects,likes) values(?1,?2,?3,?4,0,0)",nativeQuery = true)
+    void newForum(String title,String content,int classify_id,Long user_id);
 
     @Transactional
     @Modifying
@@ -61,8 +64,8 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     List<Forum> findByClassify_id(int classify_id);
 
 
-    @Query(value = "select * from Forum  where create_time >= unix_timestamp(?1) ",nativeQuery = true)
-    List<Forum> findForumsByDateDes(String current_time);
+    @Query(value = "select * from Forum  where create_time >= unix_timestamp(?1) and classify_id=?2 order by create_time desc ",nativeQuery = true)
+    List<Forum> findForumsByDateDes(String current_time,int classify_id);
     
     @Query(value = "select * from Forum  where INSTR(content,?1)",nativeQuery = true)
     List<Forum> findForumsByUniqWord(String key);
