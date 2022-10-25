@@ -17,6 +17,7 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     @Query("select f from Forum f where f.likes+f.collects >=100 order by f.likes desc ")
     List<Forum> findTopForums();
 
+    List<Forum> findAll();
 
     @Transactional
     @Modifying
@@ -57,13 +58,13 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     void deleteByForum_id(int forum_id);
 
     @Query(value = "select f from Forum f where f.classify_id=?1")
-    Iterable<Forum> findByClassify_id(int classify_id);
+    List<Forum> findByClassify_id(int classify_id);
 
 
     @Query(value = "select * from Forum  where create_time >= unix_timestamp(?1) ",nativeQuery = true)
-    Iterable<Forum> findForumsByDateDes(String current_time);
+    List<Forum> findForumsByDateDes(String current_time);
     
     @Query(value = "select * from Forum  where INSTR(content,?1)",nativeQuery = true)
-    Iterable<Forum> findForumsByUniqWord(String key);
+    List<Forum> findForumsByUniqWord(String key);
 }
 

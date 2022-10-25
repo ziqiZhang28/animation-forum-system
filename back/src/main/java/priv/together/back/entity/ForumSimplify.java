@@ -1,79 +1,34 @@
 package priv.together.back.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+
 import java.util.Date;
 
-@Entity
-public class Forum {
-    @Id
+public class ForumSimplify {
     int forum_id;
 
-    @Column
     String title;
 
-    @Column
     String content;
 
-    @Column
     int classify_id;
 
-    @Column
     int collects;
 
-    @Column
     int likes;
 
-    @Column
     Long user_id;
 
-    @Column
-    Date create_time;
+    String create_time;
 
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
-    }
-
-    public int getCollects() {
-        return collects;
-    }
-
-    public void setCollects(int collects) {
-        this.collects = collects;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public Date getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Date create_time) {
-        this.create_time = create_time;
-    }
-
-
-    public Forum() {
-    }
-
-    public Forum(int forum_id, String title, String content, int classify_id, int collects, int likes) {
+    public ForumSimplify(int forum_id, String title, String content, int classify_id, int collects, int likes, Long user_id, String create_time) {
         this.forum_id = forum_id;
         this.title = title;
         this.content = content;
         this.classify_id = classify_id;
         this.collects = collects;
         this.likes = likes;
+        this.user_id = user_id;
+        this.create_time = create_time;
     }
 
     public int getForum_id() {
@@ -106,5 +61,37 @@ public class Forum {
 
     public void setClassify_id(int classify_id) {
         this.classify_id = classify_id;
+    }
+
+    public int getCollects() {
+        return collects;
+    }
+
+    public void setCollects(int collects) {
+        this.collects = collects;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public Long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Long user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
     }
 }
