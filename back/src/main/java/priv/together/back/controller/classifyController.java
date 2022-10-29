@@ -54,9 +54,9 @@ public class classifyController {
         return map;
     }
 
-/*    @DeleteMapping("/deleteClassify")
+   @DeleteMapping("/deleteClassify")
     @Operation(summary = "删除板块",parameters = {@Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1")})
     public void deleteClassify(@RequestParam("classify_id")int classify_id){
         classifyService.deleteClassify(classify_id);
-    }*/
+    }
 }
