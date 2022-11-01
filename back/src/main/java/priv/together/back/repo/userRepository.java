@@ -34,4 +34,8 @@ public interface userRepository extends CrudRepository <User,Long> {
     @Query(value = "select nickname from User where user_id=?1")
     String getNicknameByUser_id(Long user_id);
 
+    @Query(value = "select userface from User where user_id=?1")
+    String getUserFaceByUser_id(Long user_id);
+
+
 }

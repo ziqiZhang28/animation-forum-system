@@ -1,6 +1,7 @@
 package priv.together.back.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Comment {
@@ -22,6 +23,16 @@ public class Comment {
     @Column
     int to_comment_id;
 
+    @Column
+    Date time;
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
     public Comment() {
     }

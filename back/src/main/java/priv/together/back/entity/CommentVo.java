@@ -18,7 +18,11 @@ public class CommentVo {
 
     String nickname;
 
-    public CommentVo(int comment_id, String content, Long user_id, int forum_id, int root_comment_id, int to_comment_id, String nickname) {
+    String time;
+
+    String userface;
+
+    public CommentVo(int comment_id, String content, Long user_id, int forum_id, int root_comment_id, int to_comment_id, String nickname, String time, String userface) {
         this.comment_id = comment_id;
         this.content = content;
         this.user_id = user_id;
@@ -26,6 +30,24 @@ public class CommentVo {
         this.root_comment_id = root_comment_id;
         this.to_comment_id = to_comment_id;
         this.nickname = nickname;
+        this.time = time;
+        this.userface = userface;
+    }
+
+    public String getUserface() {
+        return userface;
+    }
+
+    public void setUserface(String userface) {
+        this.userface = userface;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getComment_id() {

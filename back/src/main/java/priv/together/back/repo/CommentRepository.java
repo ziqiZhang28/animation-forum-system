@@ -16,15 +16,15 @@ public interface CommentRepository extends CrudRepository<Comment,Integer> {
     @Query(value = "insert into Comment(content,user_id,forum_id) values ( ?1,?2,?3 )",nativeQuery = true)
     void addNewCommentToForum(String content,Long user_id,int forum_id);
 
-    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=0")
+    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=0 order by c.time desc")
     List<Comment> getRootCommentByForum_id(int forum_id);
 
-    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=?2")
+    @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=?2 order by c.time desc")
     List<Comment> getCommentByForum_idAndRoot_comment_id(int forum_id,int root_comment_id);
 
     @Transactional
     @Modifying
-    @Query(value = "insert into Comment(content,user_id,forum_id,root_comment_id) values ( ?1,?2,?3,?4)",nativeQuery = true)
+    @Query(value = "insert into Comment(content,user_id,forum_id,root_comment_id,to_comment_id) values ( ?1,?2,?3,?4,0)",nativeQuery = true)
     void addReplyToComment(String content,Long user_id,int forum_id,int root_comment_id);
 
     @Transactional
@@ -41,4 +41,7 @@ public interface CommentRepository extends CrudRepository<Comment,Integer> {
     @Modifying
     @Query(value = "delete from Comment  where forum_id=?1",nativeQuery = true)
     void deleteByForum_id(int forum_id);
+
+    @Query(value = "select c from Comment c where c.comment_id=?1")
+    Comment getCommentByComment_id(int comment_id);
 }
