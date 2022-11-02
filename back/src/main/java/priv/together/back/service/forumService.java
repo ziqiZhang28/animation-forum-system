@@ -40,6 +40,10 @@ public class forumService {
 
         return topForum;
     }
+    public Forum getCompleteForum(int forum_id){
+        return forumRepository.findByForum_id(forum_id);
+    }
+
     public  List<ForumVO> getTopForums(int classify_id){
         List<Forum> list=forumRepository.findTopForums(classify_id);
         List<ForumVO> topForum=new ArrayList<>();

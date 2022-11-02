@@ -37,7 +37,8 @@ public class commentService {
                                             c.getTo_comment_id(),
                                             userRepository.getNicknameByUser_id(c.getUser_id()),
                                             sdf.format(c.getTime()),
-                                            userRepository.getUserFaceByUser_id(c.getUser_id()))
+                                            userRepository.getUserFaceByUser_id(c.getUser_id()),
+                                            userRepository.getNicknameByUser_id(commentResitory.getUserIdbyComment_id(c.getTo_comment_id())))
             );
         }
         map.put(0,root_comment);
@@ -55,7 +56,8 @@ public class commentService {
                         cl.getTo_comment_id(),
                         userRepository.getNicknameByUser_id(cl.getUser_id()),
                         sdf.format(cl.getTime()),
-                        userRepository.getUserFaceByUser_id(cl.getUser_id()))
+                        userRepository.getUserFaceByUser_id(cl.getUser_id()),
+                        userRepository.getNicknameByUser_id(commentResitory.getUserIdbyComment_id(cl.getTo_comment_id())))
                 );
             }
             map.put(root_comment_id,commentVos);

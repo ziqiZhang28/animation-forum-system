@@ -13,7 +13,7 @@ import java.util.List;
 public interface CommentRepository extends CrudRepository<Comment,Integer> {
     @Transactional
     @Modifying
-    @Query(value = "insert into Comment(content,user_id,forum_id) values ( ?1,?2,?3 )",nativeQuery = true)
+    @Query(value = "insert into Comment(content,user_id,forum_id,root_comment_id,to_comment_id) values ( ?1,?2,?3,0,0)",nativeQuery = true)
     void addNewCommentToForum(String content,Long user_id,int forum_id);
 
     @Query(value = "select c from Comment c where c.forum_id=?1 and c.root_comment_id=0 order by c.time desc")
@@ -44,4 +44,7 @@ public interface CommentRepository extends CrudRepository<Comment,Integer> {
 
     @Query(value = "select c from Comment c where c.comment_id=?1")
     Comment getCommentByComment_id(int comment_id);
+
+    @Query(value = "select c.user_id from Comment c where c.comment_id=?1")
+    Long getUserIdbyComment_id(int comment_id);
 }

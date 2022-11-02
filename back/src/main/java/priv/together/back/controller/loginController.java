@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import priv.together.back.entity.Forum;
 import priv.together.back.entity.User;
 import priv.together.back.service.userService;
 import priv.together.back.util.TokenUtil;
@@ -25,7 +26,10 @@ public class loginController {
     @Operation(summary = "登录设置Token,已完成",
                parameters = {@Parameter(name = "username",in = ParameterIn.QUERY,example = "admin"),
                              @Parameter(name = "password",in = ParameterIn.QUERY,example = "123")})
-    Map<String,Object> userLogin(@RequestParam("username") String username, @RequestParam("password")String password){
+    Map<String,Object> userLogin(@RequestBody Map<String,String> data){
+        String username=data.get("username");
+        String password=data.get("password");
+
         Map<String,Object> map=new HashMap<>();
         map.put("code",0);
         User user=user_service.findByUsername(username);
@@ -40,4 +44,6 @@ public class loginController {
         }
         return map;
     }
+
+
 }

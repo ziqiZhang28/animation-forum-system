@@ -26,23 +26,49 @@ public class classifyController {
         return map;
     }
 
-    @PostMapping("/addClassify")
+/*    @PostMapping("/addClassify")
     @Operation(summary = "新增板块分类",parameters = {
             @Parameter(name = "title",in = ParameterIn.QUERY,example = "超级英雄"),
             @Parameter(name = "description",in = ParameterIn.QUERY,example = "This is superman!")
     })
     void addNewClassify(@RequestParam("title")String title,@RequestParam("description")String description){
         classifyService.addClassify(title,description);
+    }*/
+
+    @PostMapping("/addClassify")
+    @Operation(summary = "新增板块分类",parameters = {
+            @Parameter(name = "title",in = ParameterIn.QUERY,example = "超级英雄"),
+            @Parameter(name = "description",in = ParameterIn.QUERY,example = "This is superman!")
+    })
+    public Map<String,String> addNewClassify(@RequestBody Map<String,String> data){
+        System.out.println(data);
+        String title=data.get("title");
+        String description=data.get("description");
+        classifyService.addClassify(title,description);
+        return data;
     }
 
 
-    @PutMapping("/updateClassify")
+    /*@PutMapping("/updateClassify")
     @Operation(summary = "修改板块名称",parameters = {
             @Parameter(name = "name",in=ParameterIn.QUERY,example = "Spider Man"),
             @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "2")})
     public void updateClassify(@RequestParam("name")String name,@RequestParam("classify_id") int classify_id){
         classifyService.modifyClassify(name,classify_id);
+    }*/
+
+    @PutMapping("/updateClassify")
+    @Operation(summary = "修改板块名称",parameters = {
+            @Parameter(name = "name",in=ParameterIn.QUERY,example = "Spider Man"),
+            @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "2")})
+    public Map<String,String> updateClassify(@RequestBody Map<String,String> data){
+        System.out.println(data);
+        String name=data.get("name");
+        int classify_id=Integer.parseInt(data.get("classify_id"));
+        classifyService.modifyClassify(name,classify_id);
+        return data;
     }
+
     @GetMapping("/getClassifyById")
     @Operation(summary = "通过板块Id查找",parameters = {
             @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "2")

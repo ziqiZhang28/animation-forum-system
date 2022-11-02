@@ -12,15 +12,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/board")
 public class boardController {
     @Autowired
     boardService boardService;
 
+/*
     @PostMapping("/addNewBoard")
     @Operation(summary = "新增公告",parameters = {@Parameter(name = "content",in= ParameterIn.QUERY,example = "公告：新增辛普森一家！！速看！！！")})
     public void addNewBroad(@RequestParam("content")String content){
         boardService.addNewBoard(content);
+    }
+*/
+
+
+    @PostMapping("/addNewBoard")
+    @Operation(summary = "新增公告",parameters = {@Parameter(name = "content",in= ParameterIn.QUERY,example = "公告：新增辛普森一家！！速看！！！")})
+    public Map<String,String> Test(@RequestBody Map<String,String> data){
+        System.out.println(data);
+        String content=data.get("content");
+        boardService.addNewBoard(content);
+        return data;
     }
 
     @GetMapping("/getAllBoard")

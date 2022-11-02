@@ -1,11 +1,13 @@
 package priv.together.back.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Forum;
+import priv.together.back.entity.User;
 import priv.together.back.service.forumService;
 
 import java.text.SimpleDateFormat;
@@ -17,7 +19,7 @@ public class forumController {
     @Autowired
     forumService forumService;
 
-    @PostMapping("/addForum")
+/*    @PostMapping("/addForum")
     @Operation(summary = "用户添加帖子",
               parameters = {
                 @Parameter(name = "title",in = ParameterIn.QUERY,example = "傻逼帖子的题目"),
@@ -27,7 +29,27 @@ public class forumController {
               })
     public void addForum(@RequestParam("title")String title,@RequestParam("content")String content,@RequestParam("classify_id")int classify_id,@RequestParam("user_id")Long user_id){
         forumService.addNewForum(title,content,classify_id,user_id);
+    }*/
+
+    @PostMapping("/addForum")
+    @Operation(summary = "用户添加帖子",
+            parameters = {
+                    @Parameter(name = "title",in = ParameterIn.QUERY,example = "傻逼帖子的题目"),
+                    @Parameter(name = "content",in=ParameterIn.QUERY,example = "傻逼帖子的内容"),
+                    @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1"),
+                    @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
+            })
+    public Map<String,String> addForum(@RequestBody Map<String,String> data){
+
+        String title=data.get("title");
+        String content=data.get("content");
+        int classify_id=Integer.parseInt(data.get("classify_id"));
+        Long user_id=Long.parseLong(data.get("user_id"));
+
+        forumService.addNewForum(title,content,classify_id,user_id);
+        return data;
     }
+
     @GetMapping("/getAllForums")
     @Operation(summary = "所有帖子列表(全部)")
     public Map<String,Object> getAllForums(){
@@ -71,13 +93,24 @@ public class forumController {
         return map;
     }
 
-    @PutMapping("/updateForum")
+/*    @PutMapping("/updateForum")
     @Operation(summary = "修改帖子的内容",parameters = {
                 @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "1")
     })
     void modifyForumTitle(@Parameter(hidden = true) @RequestParam("forum_id") int forum_id,
                           @RequestBody Forum forum){
         forumService.updateForum(forum.getTitle(),forum.getContent(),forum.getClassify_id(),forum_id);
+    }*/
+
+    @PutMapping("/updateForum")
+    @Operation(summary = "修改帖子的内容",parameters = {
+            @Parameter(name = "forum实体",in=ParameterIn.QUERY,example = "1"),
+    })
+    public Map<String,Object> modifyForum(@RequestBody Map<String,Object> data){
+        ObjectMapper objectMapper=new ObjectMapper();
+        Forum forum=objectMapper.convertValue(data.get("forum"),Forum.class);
+        forumService.updateForum(forum.getTitle(),forum.getContent(),forum.getClassify_id(),forum.getForum_id());
+        return data;
     }
 
     @GetMapping("/getForumsByClassifyId")

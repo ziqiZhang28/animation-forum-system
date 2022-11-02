@@ -22,7 +22,17 @@ public class CommentVo {
 
     String userface;
 
-    public CommentVo(int comment_id, String content, Long user_id, int forum_id, int root_comment_id, int to_comment_id, String nickname, String time, String userface) {
+    String comment_nickname;
+
+    public String getComment_nickname() {
+        return comment_nickname;
+    }
+
+    public void setComment_nickname(String comment_nickname) {
+        this.comment_nickname = comment_nickname;
+    }
+
+    public CommentVo(int comment_id, String content, Long user_id, int forum_id, int root_comment_id, int to_comment_id, String nickname, String time, String userface, String comment_nickname) {
         this.comment_id = comment_id;
         this.content = content;
         this.user_id = user_id;
@@ -32,6 +42,7 @@ public class CommentVo {
         this.nickname = nickname;
         this.time = time;
         this.userface = userface;
+        this.comment_nickname=comment_nickname;
     }
 
     public String getUserface() {

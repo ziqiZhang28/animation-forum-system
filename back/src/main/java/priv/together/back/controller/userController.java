@@ -1,5 +1,6 @@
 package priv.together.back.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -40,10 +41,21 @@ public class userController {
     void deleteUser(@Parameter(hidden = true)@RequestParam("user_id")Long user_id){
         userService.deleteOneUser(user_id);
     }
-    @PutMapping("/updateUser")
+
+/*    @PutMapping("/updateUser")
     @Operation(summary = "更新用户资料")
     void updateUser(@RequestBody User user){
         userService.updateOneUser(user.getNickname(),user.getEmail(),user.getUserface(),user.getUser_id());
+    }*/
+
+    @PutMapping("/updateUser")
+    @Operation(summary = "更新用户资料",
+    parameters = {@Parameter(name = "传一个user实体即可")})
+    public Map<String,Object> updateUser(@RequestBody Map<String,Object> data){
+        ObjectMapper objectMapper=new ObjectMapper();
+        User user=objectMapper.convertValue(data.get("user"),User.class);
+        userService.updateOneUser(user.getNickname(),user.getEmail(),user.getUserface(),user.getUser_id());
+        return data;
     }
 
     @GetMapping("/getUserLikes")
@@ -68,39 +80,88 @@ public class userController {
         return map;
     }
 
-    @PutMapping("/like")
+/*    @PutMapping("/like")
     @Operation(summary = "点赞",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
             @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
     })
     void likeOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
         likesService.likeOneForum(user_id,forum_id);
+    }*/
+
+    @PutMapping("/like")
+    @Operation(summary = "点赞",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    public Map<String,String> likeOneForum(@RequestBody Map<String,String> data){
+        Long user_id=Long.parseLong(data.get("user_id"));
+        int forum_id=Integer.parseInt(data.get("forum_id"));
+        likesService.likeOneForum(user_id,forum_id);
+        return data;
     }
-    @PutMapping("/collect")
+
+/*    @PutMapping("/collect")
     @Operation(summary = "收藏",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
             @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
     })
     void collectOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
         collectsService.collectOneForum(user_id,forum_id);
+    }*/
+
+    @PutMapping("/collect")
+    @Operation(summary = "收藏",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    public Map<String,String> collectOneForum(@RequestBody Map<String,String> data){
+        Long user_id=Long.parseLong(data.get("user_id"));
+        int forum_id=Integer.parseInt(data.get("forum_id"));
+        collectsService.collectOneForum(user_id,forum_id);
+        return data;
     }
 
-    @PutMapping("/dislike")
+/*    @PutMapping("/dislike")
     @Operation(summary = "取消点赞",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
             @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
     })
     void dislikeOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
         likesService.dislikeOneForum(user_id, forum_id);
+    }*/
+    @PutMapping("/dislike")
+    @Operation(summary = "取消点赞",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    public Map<String,String> dislikeOneForum(@RequestBody Map<String,String> data){
+        Long user_id=Long.parseLong(data.get("user_id"));
+        int forum_id=Integer.parseInt(data.get("forum_id"));
+        likesService.dislikeOneForum(user_id, forum_id);;
+        return data;
     }
 
-    @PutMapping("/discollect")
+
+/*    @PutMapping("/discollect")
     @Operation(summary = "取消收藏",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
             @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
     })
     void disCollectOneForum(@RequestParam("user_id")Long user_id,@RequestParam("forum_id")int forum_id){
         collectsService.disCollectOneForum(user_id, forum_id);
+    }*/
+
+    @PutMapping("/discollect")
+    @Operation(summary = "取消收藏",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "forum_id",in=ParameterIn.QUERY,example = "2")
+    })
+    public Map<String,String> disCollectOneForum(@RequestBody Map<String,String> data){
+        Long user_id=Long.parseLong(data.get("user_id"));
+        int forum_id=Integer.parseInt(data.get("forum_id"));
+        collectsService.disCollectOneForum(user_id, forum_id);
+        return data;
     }
 
     @GetMapping("/getOneUser")
@@ -114,14 +175,27 @@ public class userController {
         return  map;
     }
 
-    @PutMapping("/updatePassword")
+/*    @PutMapping("/updatePassword")
     @Operation(summary = "重置密码",parameters = {
             @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
             @Parameter(name = "password",in=ParameterIn.QUERY,example = "456")
     })
     void updatePassword(@RequestParam("password")String password, @RequestParam("user_id")Long user_id){
         userService.updateUserPassword(password, user_id);
+    }*/
+
+    @PutMapping("/updatePassword")
+    @Operation(summary = "重置密码",parameters = {
+            @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2"),
+            @Parameter(name = "password",in=ParameterIn.QUERY,example = "456")
+    })
+    public Map<String,String> updatePassword(@RequestBody Map<String,String> data){
+        Long user_id=Long.parseLong(data.get("user_id"));
+        String password=data.get("password");
+        userService.updateUserPassword(password, user_id);
+        return data;
     }
+
 
     @GetMapping("/getUserByToken")
     @Operation(summary = "通过Token得到用户",parameters = {
