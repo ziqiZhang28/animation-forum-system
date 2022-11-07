@@ -14,7 +14,7 @@ export type HeaderSearchProps = {
   onVisibleChange?: (b: boolean) => void;
   className?: string;
   placeholder?: string;
-  options: AutoCompleteProps['options'];
+//   options: AutoCompleteProps['options'];
   defaultVisible?: boolean;
   visible?: boolean;
   defaultValue?: string;
@@ -85,7 +85,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
           placeholder={placeholder}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              if (restProps.onSearch) {
+                if (restProps.onSearch) {
                 restProps.onSearch(value);
               }
             }

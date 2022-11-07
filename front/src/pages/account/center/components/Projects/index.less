@@ -1,54 +1,53 @@
 @import '~antd/es/style/themes/default.less';
 
-.coverCardList {
-  .card {
+.articleList {
     :global {
-      .ant-card-meta-title {
-        margin-bottom: 4px;
-        & > a {
-          display: inline-block;
-          max-width: 100%;
-          color: @heading-color;
+        .ant-list-item:first-child {
+            padding-top: 0;
         }
-      }
-      .ant-card-meta-description {
-        height: 44px;
-        overflow: hidden;
+    }
+}
+
+a.listItemMetaTitle {
+    color: @heading-color;
+}
+
+.listContent {
+    .description {
+        max-width: 720px;
         line-height: 22px;
-      }
     }
 
-    &:hover {
-      :global {
-        .ant-card-meta-title > a {
-          color: @primary-color;
+    .extra {
+        margin-top: 16px;
+        color: @text-color-secondary;
+        line-height: 22px;
+
+        &> :global(.ant-avatar) {
+            position: relative;
+            top: 1px;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: top;
         }
-      }
-    }
-  }
 
-  .cardItemContent {
-    display: flex;
-    height: 20px;
-    margin-top: 16px;
-    margin-bottom: -4px;
-    line-height: 20px;
-    & > span {
-      flex: 1;
-      color: @text-color-secondary;
-      font-size: 12px;
+        &>em {
+            margin-left: 16px;
+            color: @disabled-color;
+            font-style: normal;
+        }
     }
-    .avatarList {
-      flex: 0 1 auto;
-    }
-  }
-  .cardList {
-    margin-top: 24px;
-  }
+}
 
-  :global {
-    .ant-list .ant-list-item-content-single {
-      max-width: 100%;
+@media screen and (max-width: @screen-xs) {
+    .listContent {
+        .extra {
+            &>em {
+                display: block;
+                margin-top: 8px;
+                margin-left: 0;
+            }
+        }
     }
-  }
 }

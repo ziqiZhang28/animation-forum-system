@@ -88,3 +88,6 @@ export const dataDackfill = async (newData: any[], oldData: any[]) => {
         }
     }
 };
+export function clearToken() {
+    return sessionStorage.removeItem('token');
+}

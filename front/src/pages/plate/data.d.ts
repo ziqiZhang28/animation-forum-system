@@ -1,4 +1,5 @@
 import { DataItem } from '@antv/g2plot/esm/interface/config';
+import { SupportInfo } from 'prettier';
 
 export { DataItem };
 
@@ -109,3 +110,10 @@ export type RadarDataType = {
   name: string;
   value: number;
 };
+
+
+export type CardDataType = {
+    title: string;
+    classify_id: string;
+    description: string;
+}

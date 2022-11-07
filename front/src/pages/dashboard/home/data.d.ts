@@ -109,3 +109,72 @@ export type RadarDataType = {
   name: string;
   value: number;
 };
+
+
+export type AddBoardType = {
+    id?: string;
+    name: string;
+    content: string;
+};
+
+export type DelUserTYPE = {
+    user_id: string;
+}
+
+export type UptUserType = {
+    user_id: string;
+    username?: string;
+    nickname?: string;
+    password?: string;
+    enabled?: string;
+    email?: string;
+    userface?: string;
+}
+
+export type GetPostDetailType = {
+    forum_id: string;
+}
+
+export type UptPostType = {
+    title: string;
+    content: string;
+    classify_id:string
+}
+
+export type UptComment = {
+    content: string;
+    user_id: string;
+    forum: string;
+}
+
+export type UptParentComment = {
+    comment_id: number;
+    content: string;
+    user_id: string;
+    forum_id: number;
+    root_comment_id: number;
+    to_comment_id: 0;
+}
+
+export type DelPosType = {
+    forum_id:string
+}
+
+export type SearchPostType = {
+    forum_title: string;
+}
+
+export type UptPlateType = {
+    name: string;
+    classifyid?: string;
+}
+
+export type UptPasswordType = {
+    user_id: string;
+    password: string;
+}
+
+export type DelComment = {
+    comment_id: string;
+    user_id: string;
+}

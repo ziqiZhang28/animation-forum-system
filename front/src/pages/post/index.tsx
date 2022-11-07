@@ -1,9 +1,9 @@
 import { PlusOutlined, HomeOutlined, ContactsOutlined, ClusterOutlined, SettingOutlined, EditOutlined } from '@ant-design/icons';
 import { Avatar, Button, Card, Col, Divider, Input, List, Row, Tag, Tooltip } from 'antd';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { GridContent } from '@ant-design/pro-layout';
 import { Link, useRequest } from 'umi';
-import type { RouteChildrenProps } from 'react-router';
+import { RouteChildrenProps, useHistory, useLocation } from 'react-router';
 // import Projects from './components/Projects';
 import Articles from './components/Articles';
 import Applications from './components/Applications';
@@ -11,13 +11,15 @@ import type { CurrentUser, TagType, tabKeyType } from './data.d';
 import { queryCurrent } from './service';
 import styles from './Center.less';
 import Meta from 'antd/lib/card/Meta';
+import { GetPostListById } from '@/services/post/post';
+import Projects from './components/Projects';
 
 const operationTabList = [
     {
         key: 'articles',
         tab: (
             <span>
-                全部 <span style={{ fontSize: 14 }}>(8)</span>
+                全部 <span style={{ fontSize: 14 }}></span>
             </span>
         ),
     },
@@ -25,7 +27,7 @@ const operationTabList = [
         key: 'applications',
         tab: (
             <span>
-                最热 <span style={{ fontSize: 14 }}>(8)</span>
+                最热 <span style={{ fontSize: 14 }}></span>
             </span>
         ),
     },
@@ -33,7 +35,7 @@ const operationTabList = [
         key: 'projects',
         tab: (
             <span>
-                最新 <span style={{ fontSize: 14 }}>(8)</span>
+                最新 <span style={{ fontSize: 14 }}></span>
             </span>
         ),
     },
@@ -47,9 +49,11 @@ const TagList: React.FC<{ tags: CurrentUser['tags'] }> = ({ tags }) => {
 
     const showInput = () => {
         setInputVisible(true);
+        
         if (ref.current) {
             // eslint-disable-next-line no-unused-expressions
             ref.current?.focus();
+            
         }
     };
 
@@ -95,13 +99,30 @@ const TagList: React.FC<{ tags: CurrentUser['tags'] }> = ({ tags }) => {
 };
 
 const Center: React.FC<RouteChildrenProps> = () => {
+    const [title, setTitle] = useState<any>()
+    const [description,setDescription]=useState<any>()
     const [tabKey, setTabKey] = useState<tabKeyType>('articles');
+    //使用钩子获取state
+    const { state } = useLocation<any>();
+    const history = useHistory();
 
+    const handledata = async () => {
+        
+        const list = await GetPostListById({classify_id:state.classify_id})
+    
+        setTitle(state.title)
+        setDescription(state.description)
+
+    }
+    useEffect(() => {
+        handledata()
+
+    }, [])
     // 渲染tab切换
     const renderChildrenByTabKey = (tabValue: tabKeyType) => {
-        // if (tabValue === 'projects') {
-        //   return <Projects />;
-        // }
+        if (tabValue === 'projects') {
+            return <Projects />;
+        }
         if (tabValue === 'applications') {
             return <Applications />;
         }
@@ -111,15 +132,19 @@ const Center: React.FC<RouteChildrenProps> = () => {
         return null;
     };
 
+    const toWirte = () => {
+
+        history.push({ pathname: '/write', state: { classify_id: state.classify_id } })
+
+    };
+
     return (
         <GridContent>
             <Row gutter={[16,4]}>
                 <Col lg={17} md={24}>
-                    {/* <Card> */}
                         <div className={styles.divContent}>
                             <img src='https://www.dmoe.cc/random.php' />
                         </div>
-                    {/* </Card> */}
                 </Col>
                 <Col lg={7} md={24}>
                     <Card
@@ -138,36 +163,17 @@ const Center: React.FC<RouteChildrenProps> = () => {
                             <p>贴子数</p>
                             // <EllipsisOutlined key="ellipsis" />,
                         ]}
-                    >
-                        <Meta
+                    ><div style={{ color: 'black', fontSize: '18px',marginBottom:'5px' }}>{title}</div>
+                        <div style={{ color: 'grey', fontSize: '14px', marginBottom: '5px' }}>{description}</div>
+                        
+                        {/* <Meta
                             // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                             
-                            title="板块名称"
-                            description="This is the description"
-                        />
-                        <Button shape='round'>发布帖子</Button>
+                            title={title}
+                            description={description}
+                        ></Meta> */}
+                        <Button type="primary" shape='round' onClick={() => toWirte()}><EditOutlined />发布帖子</Button>
                     </Card>
-                    {/* <Card
-                        bodyStyle={{ paddingTop: 12, paddingBottom: 12 }}
-                        bordered={false}
-                        title="论坛公告"
-                        loading={projectLoading}
-                    >
-                        <List
-                            itemLayout="horizontal"
-                            dataSource={listData}
-                            // grid={{ column: 3 }}
-                            renderItem={item => (
-                                <List.Item>
-                                    <List.Item.Meta
-
-                                        title={<a href="https://ant.design">{item.title}</a>}
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-                                    />
-                                </List.Item>
-                            )}
-                        />
-                    </Card> */}
                 </Col>
                 <Col lg={17} md={24}>
 

@@ -1,17 +1,26 @@
-import { createElement, FC, useState } from 'react';
-import { Avatar, Card, Col, List, Comment, Skeleton, Row, Statistic, Tooltip } from 'antd';
+import { createElement, FC, useEffect, useRef, useState } from 'react';
+import { Avatar, Card, Col, List, Comment, Skeleton, Row, Statistic, Tooltip, message } from 'antd';
 import { Radar } from '@ant-design/charts';
 
-import { Link, useRequest } from 'umi';
+import { Link, useHistory, useLocation, useRequest } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import moment from 'moment';
 // import EditableLinkGroup from './components/EditableLinkGroup';
 import styles from './style.less';
 import type { ActivitiesType, CurrentUser } from './data.d';
 import { queryProjectNotice, queryActivities, fakeChartData } from './service';
-import { DislikeFilled, DislikeOutlined, EditOutlined, EllipsisOutlined, LikeFilled, LikeOutlined, SettingOutlined, StarOutlined } from '@ant-design/icons';
+import Icon, { DislikeFilled, DislikeOutlined, EditOutlined, EllipsisOutlined, LikeFilled, LikeOutlined, LikeTwoTone, SettingOutlined, StarFilled, StarOutlined, StarTwoTone, UserOutlined } from '@ant-design/icons';
 import Meta from 'antd/lib/card/Meta';
 import React from 'react';
+import { CollectForum, DisCollectForum, DisLikeForum, GetPostListByLike, LikeForum } from '@/services/home/home';
+import { GetAllBoard } from '@/services/board/board';
+import Cookies from 'js-cookie'
+import { GetUserByToken } from '@/services/user/login';
+import img1 from '../../../images/waoku.jpg';
+
+import Footer from '@/components/Footer';
+
+
 
 
 const PageHeaderContent: FC<{}> = ({ }) => {
@@ -36,93 +45,177 @@ const Workplace: FC = () => {
     const { loading: projectLoading, data: projectNotice = [] } = useRequest(queryProjectNotice);
     const { loading: activitiesLoading, data: activities = [] } = useRequest(queryActivities);
     const { data } = useRequest(fakeChartData);
-    const [likes, setLikes] = useState(0);
-    const [dislikes, setDislikes] = useState(0);
-    const [action, setAction] = useState<string | null>(null);
-    const tooltipInfo1 = <span style={{ color:'#FFB6C1'}}>个人设置</span>
-    const tooltipInfo2 = <span style={{ color: '#FFB6C1' }}>发帖</span>
+    const history = useHistory();
+    const [likes, setLikes] = useState<any>();
+    const [stars, setStars] = useState<any>();
+    const [action, setAction] = useState<any>(false);
+    const [commentData, setCommentData] = useState<any>()
+    const [boardData, setBoardData] = useState<any>()
+    // const [state, setstate] = useState<any>(false)
+    const tooltipInfo1 = <span style={{ color: '#FFB6C1' }}>个人中心</span>
+    const tooltipInfo2 = <span style={{ color: '#FFB6C1' }}>个人设置</span>
+    const [nickName, setNickName] = useState<any>()
+    const [userface, setUserface] = useState<any>()
+    const [userId, setUserId] = useState<any>()
+    const [description, setDescription] = useState<any>()
 
-    const like = () => {
-        setLikes(1);
-        setDislikes(0);
-        setAction('liked');
+    const Token = sessionStorage.getItem('token')
+    // const [Token,setToken]=useState<any>()
+    const { state } = useLocation<any>();
+
+    const handledata = async () => {
+        // const Token = sessionStorage.getItem('token')
+        // setToken(sessionStorage.getItem('token'))
+        let userDetail: any
+        if (state) {
+            userDetail = await GetUserByToken({ Token: state.state.token })
+
+            if (userDetail) {
+                setNickName(userDetail.nickname)
+                setUserface(userDetail.userface)
+                setUserId(userDetail.user_id)
+                setDescription(userDetail.depiction)
+            }
+
+        } else {
+            userDetail = await GetUserByToken({ Token: Token })
+
+        }
+        // const userDetail = await GetUserByToken({ Token: state.Token })
+        if (userDetail) {
+            setNickName(userDetail.nickname)
+            setUserface(userDetail.userface)
+            setUserId(userDetail.user_id)
+            setDescription(userDetail.depiction)
+
+        }
+        const list = await GetPostListByLike()
+        const res = await GetAllBoard()
+        list.forEach((element: any) => {
+            setLikes(element.likes)
+            setStars(element.collects)
+            element.islike = false
+            element.iscollect = false
+        });
+        setCommentData(list)
+        setBoardData(res)
+
+    }
+
+    useEffect(() => {
+        handledata()
+
+    }, [])
+    // const like = () => {
+    //     setLikes(likes + 1);
+    //     setAction('liked');
+    // };
+    // const star = () => {
+    //     setStars(stars + 1);
+    //     setAction('stared');
+    // };
+
+
+
+    // const commentActions = [
+    //     <>
+    //         <span onClick={like}>
+    //             {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+    //             <span className="comment-action">{likes}</span>
+    //         </span>
+    //         <span onClick={star}>
+    //             {React.createElement(action === 'stared' ? StarFilled : StarOutlined)}
+    //             <span className="comment-action">{stars}</span>
+    //         </span>
+    //         {/* <span><StarOutlined /></span> */}
+
+    //         <span key="comment-basic-reply-to" > <Link to="/form/step-form">回复</Link></span></>,
+    // ];
+
+    const toDetail = (record?: any) => {
+
+        history.push({ pathname: '/detail', state: { record: record } })
+
     };
 
-    const dislike = () => {
-        setLikes(0);
-        setDislikes(1);
-        setAction('disliked');
-    };
-    const listData = [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        
-    ];
-    const commentActions = [
-        <>
-            <span onClick={like}>
-                {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
-                <span className="comment-action">{likes}</span>
-            </span>
-            <span onClick={dislike}>
-                {React.createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-                <span className="comment-action">{dislikes}</span>
-            </span>
-            <span><StarOutlined /></span>
-            
-            <span key="comment-basic-reply-to" > <Link to="/form/step-form">回复</Link></span></>,
-    ];
-    const commentData = [
-        {
-            actions: { commentActions },
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-                
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 11:22:33">
-                    <span>8 hours ago</span>
-                </Tooltip>
-            ),
-        },
-        {
-            // actions: [<span key="comment-list-reply-to-0">回复</span>],
-            actions: { commentActions },
+    const postItem = (item: any) => {
+        console.log("item", item);
+        return (
+            <List.Item key={item.forum_id}>
+                <Comment
+                    key={item.forum_id}
+                    actions={[
+                        <>
+                            <span onClick={() => {
 
-            author: 'Han Solo',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design
-                    resources (Sketch and Axure), to help people create their product prototypes beautifully and
-                    efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title="2016-11-22 10:22:33">
-                    <span>9 hours ago</span>
-                </Tooltip>
-            ),
-        },
-    ];
+                                if (item.islike === true) {
+                                    item.islike = false
+                                    setAction(false)
+                                    DisLikeForum({
+                                        user_id: userId,
+                                        forum_id: item.forum_id
+                                    })
+                                } else {
+                                    if (!Token) {
+                                        message.info('请先登录');
+                                    } else {
+                                        item.islike = true
+                                        setLikes(item.likes + 1);
+                                        setAction(true)
+                                        LikeForum({
+                                            user_id: userId,
+                                            forum_id: item.forum_id
+                                        })
+                                    }
 
+                                }
+                            }}>
+                                {createElement(item.islike === true ? LikeTwoTone : LikeOutlined)}
+                                <span className="comment-action">{item.islike === true ? item.likes + 1 : item.likes}</span>
+                            </span>
+                            <span onClick={() => {
+
+                                if (item.iscollect === true) {
+                                    item.iscollect = false
+                                    setAction(false)
+                                    DisCollectForum({
+                                        user_id: userId,
+                                        forum_id: item.forum_id
+                                    })
+                                } else {
+                                    if (!Token) {
+                                        message.info('请先登录');
+                                    } else {
+                                        item.iscollect = true
+                                        setLikes(item.collects + 1);
+                                        setAction(true)
+                                        CollectForum({
+                                            user_id: userId,
+                                            forum_id: item.forum_id
+                                        })
+                                    }
+                                }
+
+                            }}>
+                                {createElement(item.iscollect === true ? StarTwoTone : StarOutlined)}
+                                <span className={item.forum_id}>{item.iscollect === true ? item.collects + 1 : item.collects}</span>
+                            </span>
+
+                            <span key={item.forum_id} onClick={() => toDetail(item)} > 回复</span></>,
+                    ]}
+                    author={item.nickname}
+                    avatar={<Avatar src={item.userface} />}
+                    content={<div dangerouslySetInnerHTML = {{ __html: item.content }}></div>}
+                    datetime={item.create_time}
+                />
+            </List.Item>
+
+        )
+    }
     return (
+        <div>
         <PageContainer
             title={false}
-        // content={
-        //     <PageHeaderContent/>
-        // }
-
         >
             <PageHeaderContent />
 
@@ -141,17 +234,7 @@ const Workplace: FC = () => {
                             itemLayout="horizontal"
                             dataSource={commentData}
                             size="large"
-                            renderItem={item => (
-                                <li>
-                                    <Comment
-                                        actions={commentActions}
-                                        author={item.author}
-                                        avatar={item.avatar}
-                                        content={item.content}
-                                        datetime={item.datetime}
-                                    />
-                                </li>
-                            )}
+                            renderItem={(item) => postItem(item)}
                         />
                     </Card>
                 </Col>
@@ -167,18 +250,18 @@ const Workplace: FC = () => {
                         }
                         actions={[
                             <Tooltip title={tooltipInfo1} color='#FFFAFA'>
-                                <Link to="/account/settings"><SettingOutlined key="setting" color="#FFB6C1" /></Link>
+                                <Link to="/account/center"><UserOutlined key="setting" color="#FFB6C1" /></Link>
                             </Tooltip>,
                             <Tooltip title={tooltipInfo2} color='#FFFAFA'>
-                                <Link to="/post"><EditOutlined key="edit" color="#FFB6C1" /></Link>
+                                <Link to="/account/settings"><SettingOutlined key="setting" color="#FFB6C1" /></Link>
                             </Tooltip>
                             // <EllipsisOutlined key="ellipsis" />,
                         ]}
                     >
                         <Meta
-                            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                            title="Card title"
-                            description="This is the description"
+                            avatar={<Avatar src={userface ? userface : img1} />}
+                            title={nickName ? nickName : "游客"}
+                            description={description ? description : "这家伙很懒，什么都没写..."}
                         />
                     </Card>
                     <Card
@@ -189,14 +272,14 @@ const Workplace: FC = () => {
                     >
                         <List
                             itemLayout="horizontal"
-                            dataSource={listData}
-                            // grid={{ column: 3 }}
-                            renderItem={item => (
+                            dataSource={boardData}
+                            renderItem={(item: any) => (
                                 <List.Item>
                                     <List.Item.Meta
-
-                                        title={<a href="https://ant.design">{item.title}</a>}
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                        title={<a
+                                        // href="https://ant.design"
+                                        >{item.content}</a>}
+                                    // description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                                     />
                                 </List.Item>
                             )}
@@ -204,7 +287,11 @@ const Workplace: FC = () => {
                     </Card>
                 </Col>
             </Row>
-        </PageContainer>
+            </PageContainer>
+            <div>
+                <Footer />
+            </div>
+        </div>
     );
 };
 
