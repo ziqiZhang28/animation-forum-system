@@ -30,7 +30,17 @@ public class ForumSimplify {
 
     String create_time;
 
-    public ForumSimplify(int forum_id, String title, String content, int classify_id, int collects, int likes, Long user_id,String nickname, String create_time) {
+    String classify_name;
+
+    public String getClassify_name() {
+        return classify_name;
+    }
+
+    public void setClassify_name(String classify_name) {
+        this.classify_name = classify_name;
+    }
+
+    public ForumSimplify(int forum_id, String title, String content, int classify_id, int collects, int likes, Long user_id, String nickname, String create_time,String classify_name) {
         this.forum_id = forum_id;
         this.title = title;
         this.content = content;
@@ -40,6 +50,7 @@ public class ForumSimplify {
         this.user_id = user_id;
         this.nickname=nickname;
         this.create_time = create_time;
+        this.classify_name=classify_name;
     }
 
     public int getForum_id() {

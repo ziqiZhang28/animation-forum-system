@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/login")
 public class loginController {
     @Autowired
@@ -31,19 +32,26 @@ public class loginController {
         String password=data.get("password");
 
         Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map_return=new HashMap<>();
         map.put("code",0);
         User user=user_service.findByUsername(username);
 
         if(user==null){
-            map.put("msg","用户不存在！或者账号密码错误之类的！");
+            map.put("msg","用户不存在！");
+        }else if(encoder.matches(user.getPassword(),password)){
+            map.put("msg","账号密码错误！");
         }else if(encoder.matches(password,user.getPassword())){
             String token= TokenUtil.generateToken(user);
             map.put("code",1);
             map.put("data",user);
             map.put("token",token);
         }
-        return map;
+        map_return.put("data",map);
+
+        return map_return;
     }
+
+
 
 
 }

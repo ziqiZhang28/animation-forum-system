@@ -22,6 +22,9 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
 
     List<Forum> findAll();
 
+    @Query(value = "select f from Forum f where f.user_id=?1")
+    List<Forum> findForumsByUser_id(Long user_id);
+
     @Transactional
     @Modifying
     @Query(value = "insert into Forum(title,content,classify_id,user_id,collects,likes) values(?1,?2,?3,?4,0,0)",nativeQuery = true)
@@ -73,5 +76,8 @@ public interface forumRepository extends CrudRepository<Forum,Integer> {
     
     @Query(value = "select * from Forum  where INSTR(content,?1)",nativeQuery = true)
     List<Forum> findForumsByUniqWord(String key);
+
+    @Query(value = "select * from Forum  order by create_time desc limit 0,1",nativeQuery = true)
+    Forum findLastestForum();
 }
 

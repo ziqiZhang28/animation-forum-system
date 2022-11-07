@@ -18,7 +18,17 @@ public class ForumVO {
 
     String create_time;
 
-    public ForumVO(int forum_id, String title, String content, int classify_id, int collects, int likes, String nickname, String create_time) {
+    String userface;
+
+    public String getUserface() {
+        return userface;
+    }
+
+    public void setUserface(String userface) {
+        this.userface = userface;
+    }
+
+    public ForumVO(int forum_id, String title, String content, int classify_id, int collects, int likes, String nickname, String create_time, String userface) {
         this.forum_id = forum_id;
         this.title = title;
         this.content = content;
@@ -27,6 +37,7 @@ public class ForumVO {
         this.likes = likes;
         this.nickname = nickname;
         this.create_time = create_time;
+        this.userface=userface;
     }
 
     public ForumVO() {

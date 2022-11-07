@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import priv.together.back.entity.User;
 import priv.together.back.repo.userRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,8 +27,8 @@ public class userService {
         userRepository.deleteById(user_id);
     }
 
-    public void updateOneUser(String nickname,String email,String userface,Long user_id){
-        userRepository.updateUser(nickname, email, userface, user_id);
+    public void updateOneUser(String nickname,String email,String userface,Long user_id,String depiction){
+        userRepository.updateUser(nickname, email, userface,depiction,user_id);
     }
 
     public Iterable<User> getAllUsers(){
@@ -41,5 +42,13 @@ public class userService {
 
     public Optional<User> getOneUser(Long user_id){
         return userRepository.findById(user_id);
+    }
+
+    public List<User> getUsersByUsername(String username){
+        return userRepository.getUsersByUsername(username);
+    }
+
+    public  User getUserByUser_id(Long user_id){
+        return userRepository.getUserByUser_id(user_id);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import priv.together.back.entity.Forum;
 import priv.together.back.entity.ForumSimplify;
 import priv.together.back.entity.ForumVO;
+import priv.together.back.repo.ClassifyRepository;
 import priv.together.back.repo.CommentRepository;
 import priv.together.back.repo.forumRepository;
 import priv.together.back.repo.userRepository;
@@ -20,6 +21,8 @@ public class forumService {
     CommentRepository commentRepository;
     @Autowired
     userRepository userRepository;
+    @Autowired
+    ClassifyRepository classifyRepository;
 
     SimpleDateFormat sdf=new SimpleDateFormat();
     public  List<ForumVO> getHomeTopForums(){
@@ -34,7 +37,8 @@ public class forumService {
                     f.getCollects(),
                     f.getLikes(),
                     userRepository.getNicknameByUser_id(f.getUser_id()),
-                    sdf.format(f.getCreate_time()))
+                    sdf.format(f.getCreate_time()),
+                    userRepository.getUserfaceByUser_id(f.getUser_id()))
             );
         }
 
@@ -42,6 +46,26 @@ public class forumService {
     }
     public Forum getCompleteForum(int forum_id){
         return forumRepository.findByForum_id(forum_id);
+    }
+
+    public List<ForumVO> getUserForums(Long user_id){
+        List<Forum> list=forumRepository.findForumsByUser_id(user_id);
+        List<ForumVO> ForumVos=new ArrayList<>();
+
+        for(Forum f:list){
+            ForumVos.add(new ForumVO(f.getForum_id(),
+                    f.getTitle(),
+                    f.getContent(),
+                    f.getClassify_id(),
+                    f.getCollects(),
+                    f.getLikes(),
+                    userRepository.getNicknameByUser_id(f.getUser_id()),
+                    sdf.format(f.getCreate_time()),
+                    userRepository.getUserfaceByUser_id(f.getUser_id()))
+            );
+        }
+
+        return ForumVos;
     }
 
     public  List<ForumVO> getTopForums(int classify_id){
@@ -56,7 +80,8 @@ public class forumService {
                                     f.getCollects(),
                                     f.getLikes(),
                                     userRepository.getNicknameByUser_id(f.getUser_id()),
-                                    sdf.format(f.getCreate_time()))
+                                    sdf.format(f.getCreate_time()),
+                    userRepository.getUserfaceByUser_id(f.getUser_id()))
             );
         }
 
@@ -77,9 +102,24 @@ public class forumService {
                                                         forum.getLikes(),
                                                         forum.getUser_id(),
                                                         userRepository.getNicknameByUser_id(forum.getUser_id()),
-                                                        sdf.format(forum.getCreate_time()));
+                                                        sdf.format(forum.getCreate_time()),
+                                                        classifyRepository.getTitleByClassify_id(forum.getClassify_id()));
         return forumSimplify;
     }
+
+    public ForumVO findLastestForum(){
+        Forum f=forumRepository.findLastestForum();
+        return new ForumVO(f.getForum_id(),
+                f.getTitle(),
+                f.getContent(),
+                f.getClassify_id(),
+                f.getCollects(),
+                f.getLikes(),
+                userRepository.getNicknameByUser_id(f.getUser_id()),
+                sdf.format(f.getCreate_time()),
+                userRepository.getUserfaceByUser_id(f.getUser_id()));
+    }
+
 
     public void updateForum(String title,String content,int classify_id,int forum_id){
         forumRepository.updateForum(title,content,classify_id,forum_id);
@@ -102,7 +142,8 @@ public class forumService {
                     forum.getLikes(),
                     forum.getUser_id(),
                     userRepository.getNicknameByUser_id(forum.getUser_id()),
-                    sdf.format(forum.getCreate_time()))
+                    sdf.format(forum.getCreate_time()),
+                    classifyRepository.getTitleByClassify_id(forum.getClassify_id()))
             );
         }
         return list;
@@ -120,7 +161,8 @@ public class forumService {
                     forum.getLikes(),
                     forum.getUser_id(),
                     userRepository.getNicknameByUser_id(forum.getUser_id()),
-                    sdf.format(forum.getCreate_time()))
+                    sdf.format(forum.getCreate_time()),
+                    classifyRepository.getTitleByClassify_id(forum.getClassify_id()))
             );
         }
         return list;
@@ -138,7 +180,8 @@ public class forumService {
                     forum.getLikes(),
                     forum.getUser_id(),
                     userRepository.getNicknameByUser_id(forum.getUser_id()),
-                    sdf.format(forum.getCreate_time()))
+                    sdf.format(forum.getCreate_time()),
+                    classifyRepository.getTitleByClassify_id(forum.getClassify_id()))
             );
         }
         return list;
@@ -156,9 +199,12 @@ public class forumService {
                     forum.getLikes(),
                     forum.getUser_id(),
                     userRepository.getNicknameByUser_id(forum.getUser_id()),
-                    sdf.format(forum.getCreate_time()))
+                    sdf.format(forum.getCreate_time()),
+                    classifyRepository.getTitleByClassify_id(forum.getClassify_id()))
             );
         }
         return list;
     }
+
+
 }

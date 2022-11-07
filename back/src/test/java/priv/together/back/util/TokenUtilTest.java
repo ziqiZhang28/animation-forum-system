@@ -10,7 +10,7 @@ import priv.together.back.entity.User;
 class TokenUtilTest {
 
 
-    User user=new User(1L,"123","123","123","3","123@qq.com","34");
+    User user=new User(1L,"123","123","123","3","123@qq.com","34","asd");
     String token=TokenUtil.generateToken(user);
     @BeforeEach
     void setUp() {

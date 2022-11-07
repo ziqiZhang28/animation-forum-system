@@ -28,7 +28,7 @@ public class commentService {
         List<CommentVo> root_comment=new ArrayList<>();
         Map<Integer,List<CommentVo>> map=new HashMap<>();
         for(Comment c:origin_root_comment){
-            System.out.println("root时间是："+sdf.format(c.getTime()));
+
             root_comment.add(new CommentVo(c.getComment_id(),
                                             c.getContent(),
                                             c.getUser_id(),
@@ -42,12 +42,12 @@ public class commentService {
             );
         }
         map.put(0,root_comment);
+        List<CommentVo> commentVos=new ArrayList<>();
         for(CommentVo c:root_comment){
             int root_comment_id=c.getComment_id();
             List<Comment> comments=commentResitory.getCommentByForum_idAndRoot_comment_id(forum_id,root_comment_id);
-            List<CommentVo> commentVos=new ArrayList<>();
             for(Comment cl:comments){
-                System.out.println("时间是："+sdf.format(cl.getTime()));
+                //System.out.println("时间是："+sdf.format(cl.getTime()));
                 commentVos.add(new CommentVo(cl.getComment_id(),
                         cl.getContent(),
                         cl.getUser_id(),
@@ -60,9 +60,9 @@ public class commentService {
                         userRepository.getNicknameByUser_id(commentResitory.getUserIdbyComment_id(cl.getTo_comment_id())))
                 );
             }
-            map.put(root_comment_id,commentVos);
-        }
 
+        }
+        map.put(1,commentVos);
         return map;
     }
 

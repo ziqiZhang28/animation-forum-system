@@ -30,7 +30,7 @@ public class boardController {
     @PostMapping("/addNewBoard")
     @Operation(summary = "新增公告",parameters = {@Parameter(name = "content",in= ParameterIn.QUERY,example = "公告：新增辛普森一家！！速看！！！")})
     public Map<String,String> Test(@RequestBody Map<String,String> data){
-        System.out.println(data);
+        //System.out.println(data);
         String content=data.get("content");
         boardService.addNewBoard(content);
         return data;
@@ -43,5 +43,16 @@ public class boardController {
         map.put("code",1);
         map.put("data",boardService.getAllBoard());
         return map;
+    }
+
+    @DeleteMapping("/deleteBoard")
+    @Operation(summary = "删除公告根据ID",parameters = {
+            @Parameter(name = "board_id",in = ParameterIn.QUERY,example = "1")
+    })
+    public Map<String,String> deleteBoard(@RequestBody Map<String,String> data){
+        //System.out.println(data);
+        int board_id=Integer.parseInt(data.get("board_id"));
+        boardService.deleteBoard(board_id);
+        return data;
     }
 }

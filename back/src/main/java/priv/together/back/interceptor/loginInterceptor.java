@@ -1,3 +1,4 @@
+/*
 package priv.together.back.interceptor;
 
 import org.springframework.web.method.HandlerMethod;
@@ -27,3 +28,4 @@ public class loginInterceptor implements HandlerInterceptor {
         }
     }
 }
+*/

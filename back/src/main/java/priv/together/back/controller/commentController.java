@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/comment")
 public class commentController {
     @Autowired
@@ -39,7 +40,6 @@ public class commentController {
         String content=data.get("content");
         Long user_id=Long.parseLong(data.get("user_id"));
         int forum_id=Integer.parseInt(data.get("forum_id"));
-
         commentService.addRootComment(content,user_id,forum_id);
         return data;
     }

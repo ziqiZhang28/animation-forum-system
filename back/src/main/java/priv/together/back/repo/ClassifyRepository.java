@@ -23,4 +23,7 @@ public interface ClassifyRepository extends CrudRepository<Classify,Integer> {
     @Modifying
     @Query(value = "delete from Classify where classify_id=?1",nativeQuery = true)
     void deleteByClassify_id(int classify_id);
+
+    @Query(value = "select c.title from Classify c where c.classify_id=?1")
+    String getTitleByClassify_id(int classify_id);
 }

@@ -30,4 +30,8 @@ public class boardService {
         return list;
     }
 
+    public void deleteBoard(int board_id){
+        boardResitory.deleteBoardByBoard_id(board_id);
+    };
+
 }

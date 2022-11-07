@@ -15,4 +15,9 @@ public interface boardRepository extends CrudRepository<Board,Integer> {
     void addNewBoard(String content);
 
     List<Board> findAll();
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Board where board_id=?1",nativeQuery = true)
+    void deleteBoardByBoard_id(int board_id);
 }

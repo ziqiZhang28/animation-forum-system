@@ -7,13 +7,13 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import priv.together.back.entity.Forum;
-import priv.together.back.entity.User;
 import priv.together.back.service.forumService;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/forum")
 public class forumController {
     @Autowired
@@ -39,7 +39,7 @@ public class forumController {
                     @Parameter(name = "classify_id",in = ParameterIn.QUERY,example = "1"),
                     @Parameter(name = "user_id",in=ParameterIn.QUERY,example = "2")
             })
-    public Map<String,String> addForum(@RequestBody Map<String,String> data){
+    public Map<String,Object> addForum(@RequestBody Map<String,String> data){
 
         String title=data.get("title");
         String content=data.get("content");
@@ -47,7 +47,15 @@ public class forumController {
         Long user_id=Long.parseLong(data.get("user_id"));
 
         forumService.addNewForum(title,content,classify_id,user_id);
-        return data;
+
+        Map<String,Object> map=new HashMap<>();
+        Map<String,Object> map_return=new HashMap<>();
+
+        map.put("code",1);
+        map.put("data",forumService.findLastestForum());
+        map_return.put("data",map);
+
+        return map_return;
     }
 
     @GetMapping("/getAllForums")
@@ -92,6 +100,18 @@ public class forumController {
         map.put("data",forumService.getOneForum(forum_id));
         return map;
     }
+
+    @GetMapping("/getUserForums")
+    @Operation(summary = "某个用户自己写的帖子列表",parameters = {
+            @Parameter(name = "user_id",in = ParameterIn.QUERY,example = "2")
+    })
+    Map<String,Object> getUserForums(@RequestParam("user_id")Long user_id){
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",1);
+        map.put("data",forumService.getUserForums(user_id));
+        return  map;
+    }
+
 
 /*    @PutMapping("/updateForum")
     @Operation(summary = "修改帖子的内容",parameters = {

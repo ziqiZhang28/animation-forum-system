@@ -3,10 +3,13 @@ package priv.together.back.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.together.back.entity.Forum;
+import priv.together.back.entity.ForumVO;
 import priv.together.back.entity.Likes;
 import priv.together.back.repo.likesRepository;
 import priv.together.back.repo.forumRepository;
+import priv.together.back.repo.userRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -15,11 +18,25 @@ public class likesService {
     likesRepository likesRepository;
     @Autowired
     forumRepository forumRepository;
+    @Autowired
+    userRepository userRepository;
 
-    public List<Forum> getAllLikes(Long user_id){
-        List<Forum> likes=new ArrayList<>();
+    SimpleDateFormat sdf=new SimpleDateFormat();
+
+    public List<ForumVO> getAllLikes(Long user_id){
+        List<ForumVO> likes=new ArrayList<>();
         for(Likes li: likesRepository.findAllByUser_id(user_id)){
-            likes.add(forumRepository.findByForum_id(li.getForum_id()));
+            Forum f =forumRepository.findByForum_id(li.getForum_id());
+            likes.add(new ForumVO(f.getForum_id(),
+                            f.getTitle(),
+                            f.getContent(),
+                            f.getClassify_id(),
+                            f.getCollects(),
+                            f.getLikes(),
+                            userRepository.getNicknameByUser_id(f.getUser_id()),
+                            sdf.format(f.getCreate_time()),
+                            userRepository.getUserfaceByUser_id(f.getUser_id()))
+                    );
         }
         return likes;
     }

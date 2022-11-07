@@ -23,8 +23,8 @@ public interface userRepository extends CrudRepository <User,Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "update User set nickname=?1,email=?2,userface=?3 where user_id=?4")
-    void updateUser(String nickname,String email,String userface,Long user_id);
+    @Query(value = "update User set nickname=?1,email=?2,userface=?3 ,depiction=?4 where user_id=?5")
+    void updateUser(String nickname,String email,String userface,String depiction,Long user_id);
 
     @Transactional
     @Modifying
@@ -36,6 +36,15 @@ public interface userRepository extends CrudRepository <User,Long> {
 
     @Query(value = "select userface from User where user_id=?1")
     String getUserFaceByUser_id(Long user_id);
+
+    @Query(value = "select u from User u where u.username=?1")
+    List<User> getUsersByUsername(String username);
+
+    @Query(value = "select u from User u where u.user_id=?1")
+    User getUserByUser_id(Long user_id);
+
+    @Query(value = "select u.userface from User u where u.user_id=?1")
+    String getUserfaceByUser_id(Long user_id);
 
 
 }
