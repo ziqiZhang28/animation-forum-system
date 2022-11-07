@@ -74,8 +74,8 @@ export default defineConfig({
         },
         {
             path: '/post',
-            icon: 'form',
-            name: '帖子',
+            // icon: 'form',
+            // name: '帖子',
             component: './post',
             hideInBreadcrumb: true,
             
@@ -83,6 +83,14 @@ export default defineConfig({
         {
             path: '/detail',
             component: './detail',
+        },
+        {
+            path: '/write',
+            component: './write',
+        },
+        {
+            path: '/search',
+            component: './search',
         },
         {
             path: '/plate',

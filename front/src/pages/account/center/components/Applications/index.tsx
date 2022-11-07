@@ -1,123 +1,71 @@
-import {
-  DownloadOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
-import { useRequest } from 'umi';
-import { Avatar, Card, Dropdown, List, Menu, Tooltip } from 'antd';
-import React from 'react';
-import numeral from 'numeral';
+
+import React, { useEffect, useState } from 'react';
+import { StarTwoTone, LikeOutlined, MessageFilled } from '@ant-design/icons';
+import { useHistory, useLocation, useRequest } from 'umi';
+import { Avatar, List, Tag } from 'antd';
 import type { ListItemDataType } from '../../data.d';
 import { queryFakeList } from '../../service';
-import stylesApplications from './index.less';
-
-export function formatWan(val: number) {
-  const v = val * 1;
-  if (!v || Number.isNaN(v)) return '';
-
-  let result: React.ReactNode = val;
-  if (val > 10000) {
-    result = (
-      <span>
-        {Math.floor(val / 10000)}
-        <span
-          style={{
-            position: 'relative',
-            top: -2,
-            fontSize: 14,
-            fontStyle: 'normal',
-            marginLeft: 2,
-          }}
-        >
-          万
-        </span>
-      </span>
-    );
-  }
-  return result;
-}
+import styles from './index.less';
+import moment from 'moment';
+import { GetHotPostById, GetPostListById } from '@/services/post/post';
+import { GetUserByToken } from '@/services/user/login';
+import { GetUserCollectList } from '@/services/account/center';
 
 const Applications: React.FC = () => {
-  // 获取tab列表数据
-  const { data: listData } = useRequest(() => {
-    return queryFakeList({
-      count: 30,
-    });
-  });
+    //使用钩子获取state
+    const { state } = useLocation<any>();
+    const [list, SetList] = useState<any>()
+    const handledata = async () => {
+        const Token = sessionStorage.getItem('token')
+        const userDetail = await GetUserByToken({ Token: Token })
 
-  const itemMenu = (
-    <Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="https://www.alipay.com/">
-          1st menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="https://www.taobao.com/">
-          2nd menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="https://www.tmall.com/">
-          3d menu item
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
-  const CardInfo: React.FC<{
-    activeUser: React.ReactNode;
-    newUser: React.ReactNode;
-  }> = ({ activeUser, newUser }) => (
-    <div className={stylesApplications.cardInfo}>
-      <div>
-        <p>活跃用户</p>
-        <p>{activeUser}</p>
-      </div>
-      <div>
-        <p>新增用户</p>
-        <p>{newUser}</p>
-      </div>
-    </div>
-  );
-  return (
-    <List<ListItemDataType>
-      rowKey="id"
-      className={stylesApplications.filterCardList}
-      grid={{ gutter: 24, xxl: 3, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}
-      dataSource={listData?.list || []}
-      renderItem={(item) => (
-        <List.Item key={item.id}>
-          <Card
-            hoverable
-            bodyStyle={{ paddingBottom: 20 }}
-            actions={[
-              <Tooltip key="download" title="下载">
-                <DownloadOutlined />
-              </Tooltip>,
-              <Tooltip title="编辑" key="edit">
-                <EditOutlined />
-              </Tooltip>,
-              <Tooltip title="分享" key="share">
-                <ShareAltOutlined />
-              </Tooltip>,
-              <Dropdown overlay={itemMenu} key="ellipsis">
-                <EllipsisOutlined />
-              </Dropdown>,
-            ]}
-          >
-            <Card.Meta avatar={<Avatar size="small" src={item.avatar} />} title={item.title} />
-            <div className={stylesApplications.cardItemContent}>
-              <CardInfo
-                activeUser={formatWan(item.activeUser)}
-                newUser={numeral(item.newUser).format('0,0')}
-              />
-            </div>
-          </Card>
-        </List.Item>
-      )}
-    />
-  );
+        const res = await GetUserCollectList({ user_id: userDetail.user_id })
+        SetList(res)
+
+
+    }
+    useEffect(() => {
+        handledata()
+
+    }, [])
+
+    const history = useHistory();
+    // 获取tab列表数据
+    const toDetail = (record?: any) => {
+        history.push({ pathname: '/detail', state: { record: record } })
+
+    };
+    const postItem = (item: any) => {
+        return (
+            <List.Item key={item.id}>
+                <List.Item.Meta
+                    title={
+                        <a className={styles.listItemMetaTitle} onClick={() => toDetail(item)}>
+                            {item.title}
+                        </a>
+                    }
+                />
+                <div className={styles.listContent}>
+                    <div className={styles.extra}>
+                        <Avatar src='https://www.dmoe.cc/random.php' size="small" />
+                        <em> <a >{item.nickname}</a> 发布于 {item.create_time}</em>
+                    </div>
+                </div>
+            </List.Item>
+        )
+    }
+    return (
+        <List<ListItemDataType>
+            // size="large"
+            className={styles.articleList}
+            rowKey="id"
+            itemLayout="vertical"
+            // dataSource={listData?.list || []}
+            dataSource={list || []}
+            renderItem={(item) => postItem(item)}
+
+        />
+    );
 };
 
 export default Applications;

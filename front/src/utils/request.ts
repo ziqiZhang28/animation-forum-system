@@ -96,10 +96,10 @@ request.interceptors.request.use((url: string, options) => {
   if (token) {
     headers['X-Token'] = token
   }
-  // 租户编码
-  const tenantCode = sessionStorage.getItem('tenantCode');
+  // 用户id
+  const userId = sessionStorage.getItem('userId');
   if (token) {
-    headers['tenantCode'] = tenantCode
+    headers['userId'] = userId
   }
   return ({
     url,
