@@ -3,6 +3,10 @@
 #### 介绍
 动漫论坛系统
 
+参见gitee的readme文件
+累死了，不想写了
+地址：https://gitee.com/zhangziqi_address/animation-forum-system
+
 #### 软件架构
 软件架构说明
 springboot+react
